@@ -1,0 +1,67 @@
+version: "3.7"
+services:
+
+  #application
+  app:
+    build:
+      args:
+        user: maruan
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: ticketing-system-application
+    restart: always
+    working_dir: /var/www/
+    volumes:
+      - ./app/:/var/www
+    networks:
+      - network
+
+ #Nginx Service
+  nginx:
+    image: nginx:alpine
+    restart: always
+    ports:
+      - 8000:80
+    volumes:
+      - ./app/:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+        # - ./nginx/log/:/var/log/nginx/error.log
+        #- ./nginx/log/:/var/log/nginx/access.log
+    networks:
+      - network
+
+  #Mysl Service
+  db:
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - ./database/dat/a:/var/lib/mysql
+      - ./database/logs/:/var/log/mysql
+    environment:
+      MYSQL_DATABASE: 'ticketing-system'
+      MYSQL_ROOT_PASSWORD: 'jkroll8936'
+      MYSQL_PASSWORD: 'jkroll8936'
+      MYSQL_USER: 'sa'
+    networks:
+      - network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db
+    networks:
+      - network
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8080:80
+
+networks:
+  network:
+    driver: bridge
