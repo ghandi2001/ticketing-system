@@ -1,6 +1,5 @@
 version: "3.7"
 services:
-
   #application
   app:
     build:
@@ -27,16 +26,16 @@ services:
       - ./app/:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
         # - ./nginx/log/:/var/log/nginx/error.log
-        #- ./nginx/log/:/var/log/nginx/access.log
+        # - ./nginx/log/:/var/log/nginx/access.log
     networks:
       - network
 
-  #Mysl Service
+  #Mysql Service
   db:
-    image: mysql:5.7
+    image: mysql:8
     restart: always
     volumes:
-      - ./database/dat/a:/var/lib/mysql
+      - ./database/data/:/var/lib/mysql
       - ./database/logs/:/var/log/mysql
     environment:
       MYSQL_DATABASE: 'ticketing-system'
@@ -46,6 +45,7 @@ services:
     networks:
       - network
 
+  #phpmyadmin Service
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     links:
