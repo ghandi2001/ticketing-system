@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+\App\Http\Controllers\AuthController::routes();
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('master.index');
 });
