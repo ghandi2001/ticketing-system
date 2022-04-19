@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTicketsGroupsTable extends Migration
+class CreateTicketGroupsTable extends Migration
 {
     /**
      * Run the migrations.
