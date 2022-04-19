@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 \App\Http\Controllers\AuthController::routes();
+\App\Http\Controllers\UnitController::routes();
 
 Route::get('/', function () {
     return view('master.index');
