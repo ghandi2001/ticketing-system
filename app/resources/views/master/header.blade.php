@@ -22,7 +22,7 @@
                                     <li>
                                         <div class="timeline-panel">
                                             <div class="media mr-2">
-                                                <img alt="تصویر" width="50" src="images/avatar/1.jpg">
+                                                <img alt="تصویر" width="50" src="{{asset('images/avatar/1.jpg')}}">
                                             </div>
                                             <div class="media-body">
                                                 <h6 class="mb-1">دکتر سالتون برای شما عکس ارسال می کند</h6>
@@ -37,7 +37,7 @@
                     </li>
                     <li class="nav-item dropdown header-profile">
                         <a class="nav-link" href="#" role="button" data-toggle="dropdown">
-                            <img src="images/profile/pic1.jpg" width="20" alt="">
+                            <img src="{{asset('images/profile/pic1.jpg')}}" width="20" alt="">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="app-profile.html" class="dropdown-item ai-icon">

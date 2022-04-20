@@ -18,6 +18,7 @@ class CreateUnitsTable extends Migration
             $table->string('title');
             $table->string('description')->nullable();
             $table->boolean('is_active')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
+use App\Http\Requests\TicketGroup\CreateRequest;
+use App\Models\TicketGroup;
 use Illuminate\Support\Facades\Route;
 
 class TicketGroupController extends Controller
@@ -14,77 +14,48 @@ class TicketGroupController extends Controller
         Route::resource('ticket-group', __CLASS__);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
     public function index()
     {
-        //
+        return view('ticket-groups.index')->with([
+            'ticketGroups'=>TicketGroup::all()
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
     public function create()
     {
-        //
+        return view('ticket-groups.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store()
+    public function store(CreateRequest $request)
     {
-        //
+        $ticketGroup = new TicketGroup();
+        $ticketGroup->title = $request->title;
+        $ticketGroup->description = $request->description;
+        if($ticketGroup->save()){
+            return redirect()->back()->with('message','insert successfully.');
+        }
+        return redirect()->back()->with('message','insert not successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
+    public function show(TicketGroup $ticketGroup)
     {
-        //
+        return view('ticket-groups.show')->with('ticketGroup',$ticketGroup);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function update($id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
+    public function destroy(TicketGroup $ticketGroup)
     {
-        //
+        if($ticketGroup->delete())
+            redirect()->back()->with('message','delete successfully.');
+        return redirect()->back()->with('message','delete not successfully.');
     }
 }

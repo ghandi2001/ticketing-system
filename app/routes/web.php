@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 \App\Http\Controllers\AuthController::routes();
 \App\Http\Controllers\UnitController::routes();
+\App\Http\Controllers\TicketGroupController::routes();
+\App\Http\Controllers\TicketPriorityController::routes();
+\App\Http\Controllers\TicketTypeController::routes();
+\App\Http\Controllers\ReadyAnswersController::routes();
 
 Route::get('/', function () {
     return view('master.index');

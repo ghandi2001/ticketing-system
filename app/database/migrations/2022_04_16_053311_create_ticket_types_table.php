@@ -13,11 +13,12 @@ class CreateTicketTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tickets_types', function (Blueprint $table) {
+        Schema::create('ticket_types', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('description')->nullable();
             $table->boolean('is_active')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

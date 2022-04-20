@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class TicketsPriority extends Model
+class TicketGroup extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 }
