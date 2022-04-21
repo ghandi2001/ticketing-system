@@ -18,7 +18,7 @@ class TicketTypeController extends Controller
 
     public function index()
     {
-        return view('ticket-types.index');
+        return view('ticket-types.index')->with('ticketTypes', TicketType::all());
     }
 
     public function create()
@@ -31,15 +31,15 @@ class TicketTypeController extends Controller
         $ticketType = new TicketType();
         $ticketType->title = $request->title;
         $ticketType->description = $request->description;
-        if($ticketType->save()){
-            return view('ticket-groups.index')->with('message','insert successfully.');
+        if ($ticketType->save()) {
+            return redirect()->back()->with('message', 'insert successfully.');
         }
-        return redirect()->back()->with('message','insert successfully.');
+        return redirect()->back()->with('error', 'insert not successfully.');
     }
 
-    public function show($id)
+    public function show(TicketType $ticketType)
     {
-        //
+        return view('ticket-types.show')->with('ticketType',$ticketType);
     }
 
     public function edit($id)
@@ -52,8 +52,10 @@ class TicketTypeController extends Controller
         //
     }
 
-    public function destroy($id)
+    public function destroy(TicketType $ticketType)
     {
-        //
+        if($ticketType->delete())
+            redirect()->back()->with('message','delete successfully.');
+        return redirect()->back()->with('error','delete not successfully.');
     }
 }

@@ -22,7 +22,7 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <label>نوع تیکت را انتخاب کنید</label>
-                                <select class="form-control" id="sel1" name="ticket-type"  @if(!count($ticketTypes)) disabled @endif>
+                                <select class="form-control" id="sel1" name="ticket_type"  @if(!count($ticketTypes)) disabled @endif>
                                     @foreach($ticketTypes as $ticketType)
                                         <option value="{{$ticketType->id}}">{{$ticketType->title}}</option>
                                     @endforeach

@@ -9,4 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class TicketPriority extends Model
 {
     use HasFactory, SoftDeletes;
+
+    public function ticketType()
+    {
+        return $this->belongsTo(TicketType::class);
+    }
 }

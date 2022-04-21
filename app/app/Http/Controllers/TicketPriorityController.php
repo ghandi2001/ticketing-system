@@ -19,14 +19,12 @@ class TicketPriorityController extends Controller
 
     public function index()
     {
-        return view('ticket-priorities.index');
+        return view('ticket-priorities.index')->with('ticketPriorities', TicketPriority::all());
     }
 
     public function create()
     {
-        return view('ticket-priorities.create')->with([
-            'ticketTypes' => TicketType::all()
-        ]);
+        return view('ticket-priorities.create')->with('ticketTypes', TicketType::all());
     }
 
     public function store(CreateRequest $request)
@@ -34,16 +32,16 @@ class TicketPriorityController extends Controller
         $ticketPriority = new TicketPriority();
         $ticketPriority->title = $request->title;
         $ticketPriority->description = $request->description;
-        $ticketPriority->ticket_type_id = $request->ticket_type_id;
-        if($ticketPriority->save()){
-            return view('ticket-groups.index')->with('message','insert successfully.');
+        $ticketPriority->ticket_type_id = $request->ticket_type;
+        if ($ticketPriority->save()) {
+            return redirect()->back()->with('message', 'insert successfully.');
         }
-        return redirect()->back()->with('message','insert successfully.');
+        return redirect()->back()->with('error', 'insert not successfully.');
     }
 
-    public function show($id)
+    public function show(TicketPriority $ticketPriority)
     {
-        //
+        return view('ticket-priorities.show')->with('ticketPriority',$ticketPriority);
     }
 
     public function edit($id)
@@ -56,8 +54,10 @@ class TicketPriorityController extends Controller
         //
     }
 
-    public function destroy($id)
+    public function destroy(TicketPriority $ticketPriority)
     {
-        //
+        if($ticketPriority->delete())
+            redirect()->back()->with('message','delete successfully.');
+        return redirect()->back()->with('message','delete not successfully.');
     }
 }

@@ -12,12 +12,12 @@ class UnitController extends Controller
 
     public static function routes()
     {
-        Route::resource('unit',__CLASS__);
+        Route::resource('unit', __CLASS__);
     }
 
     public function index()
     {
-        //
+        return view('unit.index')->with('units', Unit::all());
     }
 
     public function create()
@@ -30,15 +30,15 @@ class UnitController extends Controller
         $unit = new Unit();
         $unit->title = $request->title;
         $unit->description = $request->description;
-        if($unit->save()){
-            return view('unit.index')->with('message','insert successfully.');
+        if ($unit->save()) {
+            return redirect()->back()->with('message', 'insert successfully.');
         }
-        return redirect()->back()->with('message','insert successfully.');
+        return redirect()->back()->with('error', 'insert successfully.');
     }
 
-    public function show($id)
+    public function show(Unit $unit)
     {
-        //
+        return view('unit.show')->with('unit', $unit);
     }
 
     public function edit($id)
@@ -51,8 +51,10 @@ class UnitController extends Controller
         //
     }
 
-    public function destroy($id)
+    public function destroy(Unit $unit)
     {
-        //
+        if($unit->delete())
+            redirect()->back()->with('message','delete successfully.');
+        return redirect()->back()->with('error','delete not successfully.');
     }
 }

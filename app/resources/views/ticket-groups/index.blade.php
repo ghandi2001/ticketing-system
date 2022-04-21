@@ -37,7 +37,7 @@
                                             </svg>
                                         </div>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <form action="{{route('ticket-group.show',$ticketGroup->id)}}" method="GET">
+                                            <form action="{{route('ticket-group.show',$ticketGroup)}}" method="GET">
                                                 <input type="submit" class="dropdown-item" value="جزئیات"/>
                                             </form>
                                             <form action="{{route('ticket-group.destroy',$ticketGroup)}}" method="POST">

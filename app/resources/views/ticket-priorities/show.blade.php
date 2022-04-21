@@ -8,8 +8,9 @@
                     <div class="col-xl-9 col-sm-12">
                         <div class="product-detail-content">
                             <div class="new-arrival-content pr col-md-12">
-                                <h3>عنوان : {{$ticketGroup->title}}</h3>
-                                <p class="text-content">توظیحات : {{$ticketGroup->description}}</p>
+                                <h3>عنوان : {{$ticketPriority->title}}</h3>
+                                <h5 style="font-size: smaller">نوع تیکت : {{$ticketPriority->ticketType->title}}</h5>
+                                <p class="text-content">توظیحات : {{$ticketPriority->description}}</p>
                             </div>
                         </div>
                     </div>
