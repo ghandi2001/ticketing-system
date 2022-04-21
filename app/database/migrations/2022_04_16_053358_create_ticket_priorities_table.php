@@ -13,7 +13,7 @@ class CreateTicketPrioritiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tickets_priorities', function (Blueprint $table) {
+        Schema::create('ticket_priorities', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('description')->nullable();

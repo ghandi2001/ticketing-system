@@ -26,7 +26,7 @@ class CreateRequest extends FormRequest
         return [
             'title' => 'Required|min:3|max:255',
             'description' => 'Required|min:3|max:255',
-            'ticket-type'=>'exists:ticket_types,id|Required'
+            'ticket_type'=>'exists:ticket_types,id|Required'
         ];
     }
 }
