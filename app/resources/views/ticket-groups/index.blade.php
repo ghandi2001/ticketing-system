@@ -40,6 +40,9 @@
                                             <form action="{{route('ticket-group.show',$ticketGroup)}}" method="GET">
                                                 <input type="submit" class="dropdown-item" value="جزئیات"/>
                                             </form>
+                                            <form action="{{route('ticket-group.edit',$ticketGroup)}}" method="GET">
+                                                <input type="submit" class="dropdown-item" value="ویرایش"/>
+                                            </form>
                                             <form action="{{route('ticket-group.destroy',$ticketGroup)}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
