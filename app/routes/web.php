@@ -12,14 +12,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-\App\Http\Controllers\AuthController::routes();
-\App\Http\Controllers\UnitController::routes();
-\App\Http\Controllers\TicketGroupController::routes();
-\App\Http\Controllers\TicketPriorityController::routes();
-\App\Http\Controllers\TicketTypeController::routes();
-\App\Http\Controllers\ReadyAnswersController::routes();
-
-Route::get('/', function () {
-    return view('master.index');
+Route::group(['middleware'=>'auth'],function (){
+    \App\Http\Controllers\UnitController::routes();
+    \App\Http\Controllers\TicketGroupController::routes();
+    \App\Http\Controllers\TicketPriorityController::routes();
+    \App\Http\Controllers\TicketTypeController::routes();
+    \App\Http\Controllers\ReadyAnswersController::routes();
 });
+\App\Http\Controllers\AuthController::routes();
+
