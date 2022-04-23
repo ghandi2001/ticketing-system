@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Unit\CreateRequest;
+use App\Http\Requests\Unit\UpdateRequest;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -41,14 +42,16 @@ class UnitController extends Controller
         return view('unit.show')->with('unit', $unit);
     }
 
-    public function edit($id)
+    public function edit(Unit $unit)
     {
-        //
+        return view('unit.create')->with('unit', $unit);
     }
 
-    public function update($id)
+    public function update(Unit $unit, UpdateRequest $request)
     {
-        //
+        if($unit->update(['title'=>$request->title,'description'=>$request->description]))
+            return redirect()->route('unit.index')->with('message', 'delete successfully.');
+        return redirect()->back()->with('message', 'delete not successfully.');
     }
 
     public function destroy(Unit $unit)

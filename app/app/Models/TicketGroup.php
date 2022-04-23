@@ -10,10 +10,10 @@ class TicketGroup extends Model
 {
     use HasFactory, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['title','description'];
+    protected $fillable = ['title', 'description', 'is_active'];
+
+    protected $table = 'ticket_groups';
+
+    public $timestamps = true;
+
 }

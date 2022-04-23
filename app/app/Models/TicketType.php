@@ -9,4 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class TicketType extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $fillable = ['title', 'description', 'is_active'];
+
+    protected $table = 'ticket_types';
+
+    public $timestamps = true;
 }

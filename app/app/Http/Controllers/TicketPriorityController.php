@@ -41,12 +41,15 @@ class TicketPriorityController extends Controller
 
     public function show(TicketPriority $ticketPriority)
     {
-        return view('ticket-priorities.show')->with('ticketPriority',$ticketPriority);
+        return view('ticket-priorities.show')->with('ticketPriority', $ticketPriority);
     }
 
-    public function edit($id)
+    public function edit(TicketPriority $ticketPriority)
     {
-        //
+        return view('ticket-priorities.create')->with([
+            'ticketTypes' => TicketType::all(),
+            'ticketPriority' => $ticketPriority
+        ]);
     }
 
     public function update($id)
@@ -56,8 +59,8 @@ class TicketPriorityController extends Controller
 
     public function destroy(TicketPriority $ticketPriority)
     {
-        if($ticketPriority->delete())
-            redirect()->back()->with('message','delete successfully.');
-        return redirect()->back()->with('message','delete not successfully.');
+        if ($ticketPriority->delete())
+            redirect()->back()->with('message', 'delete successfully.');
+        return redirect()->back()->with('message', 'delete not successfully.');
     }
 }
