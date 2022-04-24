@@ -18,12 +18,12 @@ class UnitController extends Controller
 
     public function index()
     {
-        return view('unit.index')->with('units', Unit::all());
+        return view('units.index')->with('units', Unit::all());
     }
 
     public function create()
     {
-        return view('unit.create');
+        return view('units.create');
     }
 
     public function store(StoreRequest $request)
@@ -39,12 +39,12 @@ class UnitController extends Controller
 
     public function show(Unit $unit)
     {
-        return view('unit.show')->with('unit', $unit);
+        return view('units.show')->with('unit', $unit);
     }
 
     public function edit(Unit $unit)
     {
-        return view('unit.create')->with('unit', $unit);
+        return view('units.create')->with('unit', $unit);
     }
 
     public function update(Unit $unit, UpdateRequest $request)
