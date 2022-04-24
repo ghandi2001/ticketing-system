@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Unit\CreateRequest;
+use App\Http\Requests\Unit\StoreRequest;
 use App\Http\Requests\Unit\UpdateRequest;
 use App\Models\Unit;
 use Illuminate\Http\Request;
@@ -26,7 +26,7 @@ class UnitController extends Controller
         return view('unit.create');
     }
 
-    public function store(CreateRequest $request)
+    public function store(StoreRequest $request)
     {
         $unit = new Unit();
         $unit->title = $request->title;

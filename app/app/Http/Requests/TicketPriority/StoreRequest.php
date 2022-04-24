@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Unit;
+namespace App\Http\Requests\TicketPriority;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,8 @@ class CreateRequest extends FormRequest
     {
         return [
             'title' => 'Required|min:3|max:255',
-            'description' => 'Required|min:3|max:255'
+            'description' => 'Required|min:3|max:255',
+            'ticket_type'=>'exists:ticket_types,id|Required'
         ];
     }
 }

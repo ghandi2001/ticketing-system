@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TicketType\CreateRequest;
+use App\Http\Requests\TicketType\StoreRequest;
 use App\Http\Requests\Unit\UpdateRequest;
 use App\Models\TicketType;
 use Illuminate\Http\Request;
@@ -27,7 +27,7 @@ class TicketTypeController extends Controller
         return view('ticket-types.create');
     }
 
-    public function store(CreateRequest $request)
+    public function store(StoreRequest $request)
     {
         $ticketType = new TicketType();
         $ticketType->title = $request->title;

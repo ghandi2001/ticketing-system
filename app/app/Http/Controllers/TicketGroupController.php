@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TicketGroup\CreateRequest;
+use App\Http\Requests\TicketGroup\StoreRequest;
 use App\Http\Requests\TicketGroup\UpdateRequest;
 use App\Models\TicketGroup;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +27,7 @@ class TicketGroupController extends Controller
         return view('ticket-groups.create');
     }
 
-    public function store(CreateRequest $request)
+    public function store(StoreRequest $request)
     {
         $ticketGroup = new TicketGroup();
         $ticketGroup->title = $request->title;

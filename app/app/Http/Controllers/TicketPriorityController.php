@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TicketPriority\CreateRequest;
+use App\Http\Requests\TicketPriority\StoreRequest;
 use App\Models\TicketPriority;
 use App\Models\TicketType;
 use Illuminate\Http\Request;
@@ -27,7 +27,7 @@ class TicketPriorityController extends Controller
         return view('ticket-priorities.create')->with('ticketTypes', TicketType::all());
     }
 
-    public function store(CreateRequest $request)
+    public function store(StoreRequest $request)
     {
         $ticketPriority = new TicketPriority();
         $ticketPriority->title = $request->title;

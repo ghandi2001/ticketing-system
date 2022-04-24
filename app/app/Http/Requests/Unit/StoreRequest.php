@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\TicketGroup;
+namespace App\Http\Requests\Unit;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
