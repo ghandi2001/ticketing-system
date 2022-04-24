@@ -18,6 +18,7 @@ Route::group(['middleware'=>'auth'],function (){
     \App\Http\Controllers\TicketPriorityController::routes();
     \App\Http\Controllers\TicketTypeController::routes();
     \App\Http\Controllers\ReadyAnswersController::routes();
+    \App\Http\Controllers\UserController::routes();
 });
 \App\Http\Controllers\AuthController::routes();
 

@@ -10,4 +10,4 @@
 <link href="{{asset('vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet">
 <link href="{{asset('css/style.css')}}" rel="stylesheet">
 <link href="cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
-@yield('attempt-head')
+@yield('attempt-heads')

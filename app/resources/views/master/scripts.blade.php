@@ -14,4 +14,4 @@
 
 <!-- Dashboard 1 -->
 <script src="{{asset('js/dashboard/dashboard-1.js')}}"></script>
-@yield('attempt-script')
+@yield('attempt-scripts')
