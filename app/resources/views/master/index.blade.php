@@ -19,15 +19,16 @@
 
     <div class="content-body">
         <div class="container-fluid">
+            @yield('outrow-contents')
             <div class="row">
                 @yield('contents')
             </div>
         </div>
     </div>
-
-    @include('master.footer')
-
 </div>
+
+@include('master.footer')
+
 @include('master.scripts')
 </body>
 </html>

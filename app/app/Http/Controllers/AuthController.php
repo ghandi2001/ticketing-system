@@ -13,7 +13,6 @@ class AuthController extends Controller
     public static function routes()
     {
         Route::prefix('auth')->group(function () {
-            Route::get('/', [__CLASS__, 'dashboard']);
             Route::get('login', [__CLASS__, 'index'])->name('login.show');
             Route::post('custom-login', [__CLASS__, 'customLogin'])->name('login');
             Route::get('signout', [__CLASS__, 'signOut'])->name('signout');
@@ -34,11 +33,10 @@ class AuthController extends Controller
 
         $credentials = $request->only('phone_number', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard')
-                ->withSuccess('Signed in');
+            return redirect()->route('dashboard')->withSuccess('Signed in');
         }
 
-        return redirect("login")->withSuccess('Login details are not valid');
+        return redirect("login.show")->withSuccess('Login details are not valid');
     }
 
     public function dashboard()
@@ -47,7 +45,7 @@ class AuthController extends Controller
             return view('master.index');
         }
 
-        return redirect("login")->withSuccess('You are not allowed to access');
+        return redirect()->route('login.show')->withSuccess('You are not allowed to access');
     }
 
     public function signOut()
