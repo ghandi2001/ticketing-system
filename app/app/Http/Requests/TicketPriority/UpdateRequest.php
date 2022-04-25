@@ -24,9 +24,9 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'Required|min:3|max:255',
-            'description' => 'Required|min:3|max:255',
-            'ticket_type'=>'exists:ticket_types,id|Required'
+            'title' => 'required|min:3|max:255',
+            'description' => 'required|min:3|max:255',
+            'ticket_type'=>'required|exists:ticket_types,id'
         ];
     }
 }
