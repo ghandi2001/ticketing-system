@@ -1,9 +1,52 @@
 @extends('master.index')
 
+@section('attempt-heads')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
+@section('attempt-scripts')
+    <script>
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        let usersId = [];
+
+        function getSelectedItems(id) {
+            if (usersId.indexOf(id) === -1) {
+                usersId.push(id);
+            } else {
+                usersId.pop(id)
+            }
+            console.log(usersId)
+        }
+
+        function deleteSelectedUsers() {
+            let request = $.ajax({
+                type: "POST",
+                url: "{{route('user.collective.destruction')}}",
+                dataType: 'json',
+                data: {'data': usersId},
+            });
+
+            request.done(function () {
+                window.location.reload(true);
+            });
+
+            request.fail(function (response) {
+                alert("Request failed: " + response.responseText);
+            });
+        }
+    </script>
+@endsection
+
 @section('outrow-contents')
     <div class="row mb-5 align-items-center">
         <div class="col-lg-3 mb-4 mb-lg-0">
-            <a href="{{route('user.create')}}" class="btn btn-primary light btn-lg btn-block rounded shadow px-2">+ افزودن
+            <a href="{{route('user.create')}}" class="btn btn-primary light btn-lg btn-block rounded shadow px-2">+
+                افزودن
                 کاربر</a>
         </div>
         <div class="col-lg-9">
@@ -35,8 +78,8 @@
                         </div>
                         <div class="col-md-7 text-md-right">
                             <a href="javascript:void(0);" class="btn btn-outline-primary rounded btn-sm px-4">فعال </a>
-                            <a href="javascript:void(0);" class="btn btn-secondary rounded ml-2 btn-sm px-4">ویرایش </a>
-                            <a href="javascript:void(0);" class="btn btn-danger rounded ml-2 btn-sm px-4">حذف</a>
+                            <a href="javascript:void(0);" onclick="deleteSelectedUsers()"
+                               class="btn btn-danger rounded ml-2 btn-sm px-4">حذف</a>
                         </div>
                     </div>
                 </div>
@@ -48,13 +91,13 @@
 @section('contents')
     <div class="col-lg-12">
         <div class="table-responsive">
-            <table id="example5" class="table display mb-4 dataTablesCard fs-14">
+            <table id="users-table" class="table display mb-4 dataTablesCard fs-14">
                 <thead>
                 <tr>
                     <th>
                         <div class="checkbox mr-0 align-self-center">
                             <div class="custom-control custom-checkbox ">
-                                <input type="checkbox" class="custom-control-input" id="checkAll" required="">
+                                <input type="checkbox" class="custom-control-input" id="checkAll" onclick="getSelectedItems({{$users->pluck('id')}})">
                                 <label class="custom-control-label" for="checkAll"></label>
                             </div>
                         </div>
@@ -69,14 +112,15 @@
                 </tr>
                 </thead>
                 <tbody>
+                @php($row = 1)
                 @foreach($users as $user)
                     <tr>
                         <td>
                             <div class="checkbox mr-0 align-self-center">
                                 <div class="custom-control custom-checkbox ">
-                                    <input type="checkbox" class="custom-control-input" id="customCheckBox2"
-                                           required="">
-                                    <label class="custom-control-label" for="customCheckBox2"></label>
+                                    <input type="checkbox" class="custom-control-input" id="customCheckBox{{$row}}"
+                                           required="" onclick="getSelectedItems({{$user->id}})">
+                                    <label class="custom-control-label" for="customCheckBox{{$row++}}"></label>
                                 </div>
                             </div>
                         </td>
@@ -125,5 +169,5 @@
                 </tbody>
             </table>
         </div>
-
 @endsection
+

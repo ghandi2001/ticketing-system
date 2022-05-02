@@ -34,7 +34,7 @@
                                     @endif
                                     <div class="form-group">
                                         <label class="mb-1"><strong>شماره تلفن</strong></label>
-                                        <input type="text" class="form-control" placeholder="09123456789" style="text-align: left" name="phone_number">
+                                        <input type="text" class="form-control" minlength="11" maxlength="11" placeholder="09123456789" style="text-align: left" name="phone_number">
                                     </div>
                                     <div class="form-group">
                                         <label class="mb-1"><strong>کلمه عبور</strong></label>
