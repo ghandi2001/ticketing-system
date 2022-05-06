@@ -8,7 +8,7 @@
         _mixin
         _variable
 
-    2. bootstrap 
+    2. bootstrap
         -Here goes all official bootstrap scss files
 
     3. Global/Base
@@ -21144,7 +21144,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   fill: #a3afb7;
   color: #a3afb7;
   font-size: 0.75rem;
-  line-height: 1; 
+  line-height: 1;
   white-space: nowrap;
   margin: 0 -11px;
   }
@@ -26966,12 +26966,12 @@ table.dataTable thead .sorting {
   .event-list:hover .bgl-success:after {
     background: #21b731; }
 
-/* 
+/*
 .review-tab.nav-pills{
 	margin-bottom:0;
 	li{
 		display:inline-block;
-		
+
 		a.nav-link{
 			color: #6b6b6b;
 			background: #e9e9e9;
@@ -26996,7 +26996,7 @@ table.dataTable thead .sorting {
 		&:last-child a.nav-link{
 			border-radius:0 $radius 0 0;
 		}
-		
+
 	}
 } */
 .star-review i {
@@ -29441,3 +29441,64 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
     background-color: transparent; }
     [data-theme-version="dark"] .footer .copyright p {
       color: #fff; }
+
+/*ToggleButton*/
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 22px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #222fb9;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before { 
+    -webkit-transform: translateX(37px);
+    -ms-transform: translateX(37px);
+    transform: translateX(37px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
