@@ -4,7 +4,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">اولویت بندی تیک</h4>
+                <h4 class="card-title">بخش بندی تیکت ها</h4>
                 <a href="{{route('unit.create')}}" class="btn btn-primary  sharp mr-1">افزودن</a>
             </div>
             <div class="card-body">

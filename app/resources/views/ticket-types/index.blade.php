@@ -4,7 +4,7 @@
     <div class="col-xl-12 col-lg-12 col-xxl-12 col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">انواع تیک</h4>
+                <h4 class="card-title">انواع تیکت</h4>
                 <a href="{{route('ticket-type.create')}}" class="btn btn-primary  sharp mr-1">افزودن</a>
             </div>
             <div class="card-body">
