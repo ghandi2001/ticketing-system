@@ -12,15 +12,44 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
         let usersId = [];
 
         function getSelectedItems(id) {
             if (usersId.indexOf(id) === -1) {
                 usersId.push(id);
             } else {
-                usersId.pop(id)
+                let index = usersId.indexOf(id);
+                if (index !== -1) {
+                    usersId.splice(index, 1);
+                }
             }
-            console.log(usersId)
+            console.log(usersId);
+        }
+
+        function getAllSelectedItems(id) {
+            if (usersId.length === 0) {
+                usersId = id;
+            } else {
+                usersId = [];
+            }
+        }
+
+        function changeStatusOfSelectedUsers() {
+            let request = $.ajax({
+                type: "POST",
+                url: "{{route('user.collective.changeStatus')}}",
+                dataType: 'json',
+                data: {'data': usersId},
+            });
+
+            request.done(function () {
+                window.location.reload(true);
+            });
+
+            request.fail(function (response) {
+                alert("Request failed: " + response.responseText);
+            });
         }
 
         function deleteSelectedUsers() {
@@ -77,7 +106,8 @@
                             </div>
                         </div>
                         <div class="col-md-7 text-md-right">
-                            <a href="javascript:void(0);" class="btn btn-outline-primary rounded btn-sm px-4">فعال </a>
+                            <a href="javascript:void(0);" onclick="changeStatusOfSelectedUsers()"
+                               class="btn btn-outline-primary rounded btn-sm px-4">فعال / غیر فعال </a>
                             <a href="javascript:void(0);" onclick="deleteSelectedUsers()"
                                class="btn btn-danger rounded ml-2 btn-sm px-4">حذف</a>
                         </div>
@@ -97,7 +127,8 @@
                     <th>
                         <div class="checkbox mr-0 align-self-center">
                             <div class="custom-control custom-checkbox ">
-                                <input type="checkbox" class="custom-control-input" id="checkAll" onclick="getSelectedItems({{$users->pluck('id')}})">
+                                <input type="checkbox" class="custom-control-input" id="checkAll"
+                                       onclick="getAllSelectedItems({{$users->pluck('id')}})">
                                 <label class="custom-control-label" for="checkAll"></label>
                             </div>
                         </div>
@@ -125,7 +156,7 @@
                             </div>
                         </td>
                         <td>{{$user->personnel_code}}</td>
-                        <td>{{$user->created_at}}</td>
+                        <td>{{\Morilog\Jalali\Jalalian::fromDateTime($user->created_at)->format('%A, %d %B %Y')}}</td>
                         <td>{{$user->name}}</td>
                         <td>{{$user->surname}}</td>
                         <td>{{$user->phone_number}}</td>
@@ -135,8 +166,7 @@
                                 <span class="badge badge-rounded badge-danger">غیر فعال</span>
                             @endif </td>
                         <td class="d-flex">
-                            <form action="{{route('user.edit',$user)}}" method="POST">
-                                @method('PUT')
+                            <form action="{{route('user.edit',$user)}}" method="GET">
                                 <button style=" all: unset; cursor: pointer;" type="submit" href="javascript:void(0);">
                                     <svg width="25" height="24" viewBox="0 0 25 24" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">

@@ -18,6 +18,7 @@ class UserController extends Controller
     {
         Route::get('/user/import', [__CLASS__, 'importUsersForm'])->name('user.import.show');
         Route::post('/user/collective/destruction', [__CLASS__, 'collectiveDestruction'])->name('user.collective.destruction');
+        Route::post('/user/collective/change/status', [__CLASS__, 'collectiveChangeStatus'])->name('user.collective.changeStatus');
         Route::resource('user', __CLASS__);
     }
 
@@ -68,18 +69,21 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        //
+        return view('users.create')->with('user', $user);
     }
 
     public function update(User $user, UpdateRequest $request)
     {
-        //
+        if ($user->update(['name' => $request->name, 'surname' => $request->surname, 'phone_number' => $request->phone_number]))
+            return redirect()->route('user.index')->with('message', 'updated successfully.');
+        return redirect()->back()->with('message', 'updated not successfully.');
     }
 
     public function destroy(User $user)
     {
-        if ($user->delete())
+        if ($user->delete()) {
             redirect()->back()->with('message', 'delete successfully.');
+        }
         return redirect()->back()->with('error', 'delete not successfully.');
     }
 
@@ -90,6 +94,21 @@ class UserController extends Controller
         }
 
         User::whereIn('id', $request->input('data'))->update(['deleted_at' => now()]);
+        return response()->json('mission successful.', '200');
+    }
+
+    public function collectiveChangeStatus(Request $request)
+    {
+        if (in_array(Auth::id(), $request->input('data'))) {
+            return response()->json('you cant disable your self.', '403');
+        }
+
+        $activatedUsers = User::whereIn('id', $request->input('data'))->where('has_accessed', '=', 1)->get()->pluck('id');
+        $noneActivatedUsers = User::whereIn('id', $request->input('data'))->where('has_accessed', '=', 0)->get()->pluck('id');
+
+        User::whereIn('id', $activatedUsers)->update(['has_accessed' => 0]);
+        User::whereIn('id', $noneActivatedUsers)->update(['has_accessed' => 1]);
+
         return response()->json('mission successful.', '200');
     }
 }
