@@ -1798,7 +1798,7 @@ pre {
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #f3f3f3;
-  border-radius: 1.25rem;
+  border-radius: 0rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
   @media (prefers-reduced-motion: reduce) {
     .form-control {
@@ -29488,7 +29488,7 @@ input:focus+.slider {
     box-shadow: 0 0 1px #2196F3;
 }
 
-input:checked+.slider:before { 
+input:checked+.slider:before {
     -webkit-transform: translateX(37px);
     -ms-transform: translateX(37px);
     transform: translateX(37px);

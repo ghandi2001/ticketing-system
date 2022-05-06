@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Unit\StoreRequest;
 use App\Http\Requests\Unit\UpdateRequest;
 use App\Models\Unit;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 class UnitController extends Controller
@@ -49,15 +48,15 @@ class UnitController extends Controller
 
     public function update(Unit $unit, UpdateRequest $request)
     {
-        if($unit->update(['title'=>$request->title,'description'=>$request->description]))
+        if ($unit->update(['title' => $request->title, 'description' => $request->description]))
             return redirect()->route('unit.index')->with('message', 'delete successfully.');
         return redirect()->back()->with('message', 'delete not successfully.');
     }
 
     public function destroy(Unit $unit)
     {
-        if($unit->delete())
-            redirect()->back()->with('message','delete successfully.');
-        return redirect()->back()->with('error','delete not successfully.');
+        if ($unit->delete())
+            redirect()->back()->with('message', 'delete successfully.');
+        return redirect()->back()->with('error', 'delete not successfully.');
     }
 }

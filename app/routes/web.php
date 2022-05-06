@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 Route::group(['middleware'=>'auth'],function (){
     \App\Http\Controllers\UnitController::routes();
-    \App\Http\Controllers\TicketGroupController::routes();
     \App\Http\Controllers\TicketPriorityController::routes();
     \App\Http\Controllers\TicketTypeController::routes();
     \App\Http\Controllers\ReadyAnswersController::routes();
     \App\Http\Controllers\UserController::routes();
+    \App\Http\Controllers\TicketController::routes();
     Route::get('/', [\App\Http\Controllers\AuthController::class, 'dashboard'])->name('dashboard');
 });
 \App\Http\Controllers\AuthController::routes();

@@ -6,14 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class TicketGroup extends Model
+class TicketType extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'description', 'is_active'];
+    protected $fillable = ['title', 'description', 'unit_id', 'is_active'];
 
-    protected $table = 'ticket_groups';
+    protected $table = 'ticket_types';
 
     public $timestamps = true;
 
+    public function unit()
+    {
+        return $this->belongsToMany(Unit::class);
+    }
 }

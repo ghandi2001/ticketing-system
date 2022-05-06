@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\TicketGroup;
+namespace App\Http\Requests\TicketType;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,8 +24,8 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'Required|min:3|max:255',
-            'description' => 'Required|min:3|max:255'
+            'title' => 'required|min:3|max:255',
+            'description' => 'required|min:3|max:255'
         ];
     }
 }

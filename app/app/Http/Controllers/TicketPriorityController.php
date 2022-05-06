@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TicketPriority\StoreRequest;
 use App\Models\TicketPriority;
-use App\Models\TicketType;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 class TicketPriorityController extends Controller
@@ -24,7 +21,7 @@ class TicketPriorityController extends Controller
 
     public function create()
     {
-        return view('ticket-priorities.create')->with('ticketTypes', TicketType::all());
+        return view('ticket-priorities.create');
     }
 
     public function store(StoreRequest $request)
@@ -47,7 +44,6 @@ class TicketPriorityController extends Controller
     public function edit(TicketPriority $ticketPriority)
     {
         return view('ticket-priorities.create')->with([
-            'ticketTypes' => TicketType::all(),
             'ticketPriority' => $ticketPriority
         ]);
     }

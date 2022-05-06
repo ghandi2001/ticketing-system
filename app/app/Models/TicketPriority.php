@@ -16,8 +16,4 @@ class TicketPriority extends Model
 
     public $timestamps = true;
 
-    public function ticketType()
-    {
-        return $this->belongsTo(TicketType::class);
-    }
 }

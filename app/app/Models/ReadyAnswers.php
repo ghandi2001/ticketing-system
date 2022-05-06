@@ -16,11 +16,6 @@ class ReadyAnswers extends Model
 
     public $timestamps = true;
 
-    public function ticketType()
-    {
-        return $this->belongsToMany(TicketType::class);
-    }
-
     public function ticketGroup()
     {
         return $this->belongsToMany(TicketGroup::class);
