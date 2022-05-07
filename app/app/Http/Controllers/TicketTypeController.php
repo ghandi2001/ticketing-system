@@ -31,6 +31,7 @@ class TicketTypeController extends Controller
         $ticketType = new TicketType();
         $ticketType->title = $request->title;
         $ticketType->description = $request->description;
+        $ticketType->unit_id = $request->unit;
         if ($ticketType->save()) {
             return redirect()->back()->with('message', 'insert successfully.');
         }
@@ -44,12 +45,15 @@ class TicketTypeController extends Controller
 
     public function edit(TicketType $ticketType)
     {
-        return view('ticket-types.create')->with('ticketType', $ticketType);
+        return view('ticket-types.create')->with([
+            'ticketType' => $ticketType,
+            'units'=>Unit::all()
+        ]);
     }
 
     public function update(TicketType $ticketType, UpdateRequest $request)
     {
-        if ($ticketType->update(['title' => $request->title, 'description' => $request->description]))
+        if ($ticketType->update(['title' => $request->title, 'description' => $request->description, 'unit_id' => $request->unit]))
             return redirect()->route('ticket-type.index')->with('message', 'update successfully.');
         return redirect()->back()->with('message', 'update not successfully.');
     }

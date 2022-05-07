@@ -19,8 +19,6 @@ class CreateReadyAnswersTable extends Migration
             $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('tickets_type_id');
             $table->foreign('tickets_type_id')->references('id')->on('ticket_types');
-            $table->unsignedBigInteger('ticket_group_id');
-            $table->foreign('ticket_group_id')->references('id')->on('ticket_groups');
             $table->softDeletes();
             $table->timestamps();
         });

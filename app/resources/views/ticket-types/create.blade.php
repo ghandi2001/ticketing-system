@@ -8,17 +8,32 @@
             </div>
             <div class="card-body">
                 <div class="basic-form">
-                    <form action="@if(isset($ticketType)) {{route('ticket-type.update',$ticketType)}} @else {{route('ticket-type.store')}} @endif" method="POST">
+                    <form
+                        action="@if(isset($ticketType)) {{route('ticket-type.update',$ticketType)}} @else {{route('ticket-type.store')}} @endif"
+                        method="POST">
                         @csrf
                         @if(isset($ticketType)) @method('PUT') @endif
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label>عنوان</label>
-                                <input type="text" name="title" class="form-control" placeholder="عنوان گروهبندی" @if(isset($ticketType)) value="{{$ticketType->title}}" @endif>
+                                <input type="text" name="title" class="form-control" placeholder="عنوان گروهبندی"
+                                       @if(isset($ticketType)) value="{{$ticketType->title}}" @endif>
                             </div>
                             <div class="form-group col-md-12">
                                 <label>توظیحات</label>
-                                <input type="text" name="description" class="form-control" placeholder="توظیحات  گروهبندی"  @if(isset($ticketType)) value="{{$ticketType->description}}" @endif>
+                                <input type="text" name="description" class="form-control"
+                                       placeholder="توظیحات  گروهبندی"
+                                       @if(isset($ticketType)) value="{{$ticketType->description}}" @endif>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>بخش مربوطه</label>
+                                <select class="form-control" name="unit">
+                                    <option value="">انتخاب کنید</option>
+                                    @foreach($units as $unit)
+                                        <option value="{{$unit->id}}"
+                                                @if(isset($ticketType) && $ticketType->unit_id == $unit->id) selected @endif>{{$unit->title}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <button type="submit" class="btn btn-primary m-1">ثبت</button>
                             <button type="reset" class="btn btn-default m-1">برگشت</button>
