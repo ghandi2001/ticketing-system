@@ -55,7 +55,7 @@
         function deleteSelectedUsers() {
             let request = $.ajax({
                 type: "POST",
-                url: "{{route('user.collective.destruction')}}",
+                url: "{{route('user.collective.collective.destruction')}}",
                 dataType: 'json',
                 data: {'data': usersId},
             });

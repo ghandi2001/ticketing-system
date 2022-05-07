@@ -17,7 +17,7 @@ class UserController extends Controller
     public static function routes()
     {
         Route::get('/user/import', [__CLASS__, 'importUsersForm'])->name('user.import.show');
-        Route::post('/user/collective/destruction', [__CLASS__, 'collectiveDestruction'])->name('user.collective.destruction');
+        Route::post('/user/collective/destruction', [__CLASS__, 'collectiveDestruction'])->name('user.collective.collective.destruction');
         Route::post('/user/collective/change/status', [__CLASS__, 'collectiveChangeStatus'])->name('user.collective.changeStatus');
         Route::resource('user', __CLASS__);
     }

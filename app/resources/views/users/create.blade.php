@@ -22,10 +22,10 @@
                     @endif
                     <form action="@if(isset($user)) {{route('user.update',$user)}} @else {{route('user.store')}} @endif"
                           method="POST">
-                        @csrf
                         @if(isset($user))
                             @method('PUT')
                         @endif
+                        @csrf
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label>نام</label>
@@ -47,19 +47,22 @@
                                 <label>کد پرسنلی</label>
                                 <input type="text" name="personnel_code" class="form-control"
                                        placeholder="کد پرسنلی"
-                                       @if(isset($user)) value="{{$user->personnel_code}}" @endif>
+                                       @if(isset($user)) value="{{$user->personnel_code}}" disabled @endif>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label>گذرواژه</label>
-                                <input type="text" name="password" class="form-control" placeholder="گذرواژه"
-                                       @if(isset($user)) value="{{$user->password}}" @endif>
-                            </div>
-                            <div class="form-group col-md-6 m-auto">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="profile_picture" @if(isset($user)) value="{{$user->profile_picture}}" @endif>
-                                    <label class="custom-file-label">عکس پروفایل</label>
+                            @if(!isset($user))
+                                <div class="form-group col-md-6">
+                                    <label>گذرواژه</label>
+                                    <input type="text" name="password" class="form-control" placeholder="گذرواژه">
                                 </div>
-                            </div>
+                            @endif
+                            @if(!isset($user))
+                                <div class="form-group col-md-6 m-auto">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="profile_picture">
+                                        <label class="custom-file-label">عکس پروفایل</label>
+                                    </div>
+                                </div>
+                            @endif
                             <div class="form-group col-md-6">
                                 <button type="submit" class="btn btn-primary m-1">ثبت</button>
                                 <button type="reset" class="btn btn-default m-1">برگشت</button>
