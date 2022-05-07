@@ -10,10 +10,19 @@ class TicketPriority extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'description', 'ticket_type_id', 'is_active'];
+    protected $fillable = ['title', 'description', 'ticket_type_id', 'unit_id', 'is_active'];
 
     protected $table = 'ticket_priorities';
 
     public $timestamps = true;
 
+    public function ticketType()
+    {
+        return $this->belongsTo(TicketType::class);
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
 }

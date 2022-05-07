@@ -26,7 +26,6 @@ class UpdateRequest extends FormRequest
         return [
             'title' => 'required|min:3|max:255',
             'description' => 'required|min:3|max:255',
-            'ticket_type'=>'required|exists:ticket_types,id'
         ];
     }
 }
