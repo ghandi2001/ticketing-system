@@ -10,7 +10,7 @@ class Ticket extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'description', 'tickets_type_id', 'user_id'];
+    protected $fillable = ['title', 'description', 'tickets_type_id', 'user_id', 'closed_at'];
 
     protected $table = 'tickets';
 

@@ -21,6 +21,7 @@ class CreateTicketsTable extends Migration
             $table->foreign('ticket_type_id')->references('id')->on('ticket_types');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->dateTime('closed_at');
             $table->timestamps();
             $table->softDeletes();
         });
