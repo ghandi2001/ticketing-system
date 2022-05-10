@@ -26,40 +26,6 @@
                                        placeholder="توظیحات اولویت بندی"
                                        @if(isset($ticketPriority)) value="{{$ticketPriority->description}}" @endif>
                             </div>
-                            <div class="form-group col-md-12">
-                                <label>نوع موجودیت دارای اولویت</label>
-                                <select
-                                    class="form-control" name="type_of_priority"
-                                    onchange="showEntityOfPriority(this.value)">
-                                    @foreach($type_of_priorities as $key => $value)
-                                        <option value="{{$key}}"
-                                                @if(isset($ticketPriority))
-                                                @if(isset($ticketPriority->unit_id) && $key == 'unit') selected @endif
-                                                @if(isset($ticketPriority->ticket_type_id) && $key == 'ticketType') selected @endif
-                                            @endif>{{$value}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-md-12" id="ticketType" style="display: none">
-                                <label>نوع تیکت مربوطه</label>
-                                <select class="form-control" name="ticket_type_id">
-                                    <option value="">انتخاب کنید</option>
-                                    @foreach($ticketTypes as $ticketType)
-                                        <option value="{{$ticketType->id}}"
-                                                @if(isset($ticketPriority) && $ticketPriority->ticket_type_id == $ticketType->id) selected @endif >{{$ticketType->title}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-md-12" id="unit" style="display: none">
-                                <label>بخش مربوطه</label>
-                                <select class="form-control" name="unit_id">
-                                    <option value="">انتخاب کنید</option>
-                                    @foreach($units as $unit)
-                                        <option value="{{$unit->id}}"
-                                                @if(isset($ticketPriority) && $ticketPriority->unit_id == $unit->id) selected @endif>{{$unit->title}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
                             <button type="submit" class="btn btn-primary m-1">ثبت</button>
                             <button type="reset" class="btn btn-default m-1">برگشت</button>
                         </div>
