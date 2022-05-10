@@ -22,6 +22,7 @@
                     <li><a href="{{route('unit.index')}}">بخش</a></li>
                     <li><a href="{{route('ticket-type.index')}}">نوع های تیکت</a></li>
                     <li><a href="{{route('ticket-priority.index')}}">اولویت بندی های تیکت</a></li>
+                    <li><a href="{{route('answer.index')}}">جواب های آماده برای تیکت ها</a></li>
                 </ul>
             </li>
             <li>

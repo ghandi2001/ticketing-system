@@ -16,7 +16,7 @@ Route::group(['middleware'=>'auth'],function (){
     \App\Http\Controllers\UnitController::routes();
     \App\Http\Controllers\TicketPriorityController::routes();
     \App\Http\Controllers\TicketTypeController::routes();
-    \App\Http\Controllers\ReadyAnswersController::routes();
+    \App\Http\Controllers\AnswersController::routes();
     \App\Http\Controllers\UserController::routes();
     \App\Http\Controllers\TicketController::routes();
     Route::get('/', [\App\Http\Controllers\AuthController::class, 'dashboard'])->name('dashboard');
