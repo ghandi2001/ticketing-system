@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 class TicketPriorityController extends Controller
 {
 
-    private const TYPE_OF_PRIORITIES = ['none', 'ticketType', 'unit'];
-
-    public static function routes()
+     public static function routes()
     {
         Route::resource('ticket-priority', __CLASS__);
         Route::post('/ticket/priority/collective/destruction', [__CLASS__, 'collectiveDestruction'])->name('ticket.priority.collective.destruction');
@@ -29,11 +27,9 @@ class TicketPriorityController extends Controller
 
     public function create()
     {
-        $typeOfPrioritiesWithMessage = array_combine(self::TYPE_OF_PRIORITIES, ['انتخاب کنید', 'نوع تیکت', 'تیکت های مربوط به بخش']);
         return view('ticket-priorities.create')->with([
             'ticketTypes' => TicketType::all(),
             'units' => Unit::all(),
-            'type_of_priorities' => $typeOfPrioritiesWithMessage
         ]);
     }
 
@@ -42,11 +38,6 @@ class TicketPriorityController extends Controller
         $ticketPriority = new TicketPriority();
         $ticketPriority->title = $request->title;
         $ticketPriority->description = $request->description;
-        if ($request->type_of_priority == 'ticketType') {
-            $ticketPriority->ticket_type_id = $request->ticket_type_id;
-        } else {
-            $ticketPriority->unit_id = $request->unit_id;
-        }
         if ($ticketPriority->save()) {
             return redirect()->back()->with('message', 'insert successfully.');
         }
@@ -66,33 +57,19 @@ class TicketPriorityController extends Controller
             $state = 'ticketType';
         }
 
-        $typeOfPrioritiesWithMessage = array_combine(self::TYPE_OF_PRIORITIES, ['انتخاب کنید', 'نوع تیکت', 'تیکت های مربوط به بخش']);
         return view('ticket-priorities.create')->with([
             'ticketPriority' => $ticketPriority,
             'ticketTypes' => TicketType::all(),
             'units' => Unit::all(),
             'state' => json_encode($state),
-            'type_of_priorities' => $typeOfPrioritiesWithMessage
         ]);
     }
 
     public function update(TicketPriority $ticketPriority, UpdateRequest $request)
     {
-        $ticketTypeId = null;
-        $unitId = null;
-        if ($request->type_of_priority == self::TYPE_OF_PRIORITIES[1]) {
-            $ticketTypeId = $request->ticket_type_id;
-        } else if ($request->type_of_priority == self::TYPE_OF_PRIORITIES[2]) {
-            $unitId = $request->unit_id;
-        } else {
-            return redirect()->back()->with('message', 'update not successfully.');
-        }
-
         if ($ticketPriority->updateOrFail([
             'title' => $request->title,
             'description' => $request->description,
-            'ticket_type_id' => $ticketTypeId,
-            'unit_id' => $unitId
         ])) return redirect()->route('ticket-priority.index')->with('message', 'update successfully.');
     }
 

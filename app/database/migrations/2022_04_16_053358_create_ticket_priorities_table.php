@@ -18,10 +18,6 @@ class CreateTicketPrioritiesTable extends Migration
             $table->string('title');
             $table->string('description')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->unsignedBigInteger('ticket_type_id')->nullable();
-            $table->foreign('ticket_type_id')->references('id')->on('ticket_types');
-            $table->unsignedBigInteger('unit_id')->nullable();
-            $table->foreign('unit_id')->references('id')->on('units');
             $table->softDeletes();
             $table->timestamps();
         });

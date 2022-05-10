@@ -104,7 +104,6 @@
                             <th>ردیف</th>
                             <th>عنوان</th>
                             <th>توظیحات</th>
-                            <th>جزعیات</th>
                             <th>وظعیت</th>
                             <th>زمان ساخته شده</th>
                         </tr>
@@ -126,14 +125,6 @@
                                 <td>{{$row++}}</td>
                                 <td>{{$ticketPriority->title}}</td>
                                 <td>{{$ticketPriority->description}}</td>
-                                <td>
-                                    @if(isset($ticketPriority->ticket_type_id))
-                                        فعال شده برای نوع تیکت : {{$ticketPriority->ticketType->title}}
-                                    @endif
-                                    @if(isset($ticketPriority->unit_id))
-                                        فعال شده برای بخش مربوطه :{{$ticketPriority->unit->title}}
-                                    @endif
-                                </td>
                                 <td>@if($ticketPriority->is_active)
                                         <span class="badge badge-rounded badge-success">فعال</span>
                                     @else

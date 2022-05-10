@@ -10,7 +10,7 @@ class TicketPriority extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'description', 'ticket_type_id', 'unit_id', 'is_active'];
+    protected $fillable = ['title', 'description', 'is_active'];
 
     protected $table = 'ticket_priorities';
 
