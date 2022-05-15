@@ -8,10 +8,14 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('ticket.create')}}" class="ai-icon" aria-expanded="false">
+                <a class="ai-icon" href="javascript:void()" aria-expanded="false">
                     <i class="flaticon-381-newspaper"></i>
-                    <span class="nav-text">ثبت تیگت</span>
+                    <span class="nav-text">امور مربوط به تیکت ها</span>
                 </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{route('ticket.create')}}">ثبت تیکت</a></li>
+                    <li><a href="{{route('ticket.index')}}">مشاهده تیکت ها</a></li>
+                </ul>
             </li>
             <li>
                 <a class="ai-icon" href="javascript:void()" aria-expanded="false">

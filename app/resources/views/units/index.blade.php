@@ -1,29 +1,139 @@
 @extends('master.index')
 
+@section('attempt-heads')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
+@section('attempt-scripts')
+    <script>
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        let units = [];
+
+        function getSelectedItems(id) {
+            if (units.indexOf(id) === -1) {
+                units.push(id);
+            } else {
+                let index = units.indexOf(id);
+                if (index !== -1) {
+                    units.splice(index, 1);
+                }
+            }
+            console.log(units);
+        }
+
+        function getAllSelectedItems(id) {
+            if (units.length === 0) {
+                units = id;
+            } else {
+                units = [];
+            }
+        }
+
+        function changeStatusOfSelectedUnits() {
+            let request = $.ajax({
+                type: "POST",
+                url: "{{route('unit.collective.changeStatus')}}",
+                dataType: 'json',
+                data: {'data': units},
+            });
+
+            request.done(function () {
+                window.location.reload(true);
+            });
+
+            request.fail(function (response) {
+                alert("Request failed: " + response.responseText);
+            });
+        }
+
+        function deleteSelectedUnits() {
+            let request = $.ajax({
+                type: "POST",
+                url: "{{route('unit.collective.destruction')}}",
+                dataType: 'json',
+                data: {'data': units},
+            });
+
+            request.done(function () {
+                window.location.reload(true);
+            });
+
+            request.fail(function (response) {
+                alert("Request failed: " + response.responseText);
+            });
+        }
+    </script>
+@endsection
+
 @section('contents')
-    <div class="col-lg-12">
+    <div class="col-xl-12 col-lg-12 col-xxl-12 col-sm-12">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">بخش بندی تیکت ها</h4>
-                <a href="{{route('unit.create')}}" class="btn btn-primary  sharp mr-1">افزودن</a>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-primary dropdown-toggle sharp" data-toggle="dropdown">عملیات
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="{{route('unit.create')}}" class="dropdown-item">افزودن</a>
+                        <a href="javascript:void(0);" onclick="deleteSelectedUnits()" class="dropdown-item">حذف</a>
+                        <a href="javascript:void(0);" onclick="changeStatusOfSelectedUnits()"
+                           class="dropdown-item">فعال و غیر فعال کردن موجودیت ها</a>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table id="example5" class="table display mb-4 fs-14">
+                <div class="table-responsive recentOrderTable">
+                    <table class="table verticle-middle table-responsive-md">
                         <thead>
                         <tr>
+                            <th>
+                                <div class="checkbox mr-0 align-self-center">
+                                    <div class="custom-control custom-checkbox ">
+                                        <input type="checkbox" class="custom-control-input" id="checkAll"
+                                               onclick="getAllSelectedItems({{$units->pluck('id')}})">
+                                        <label class="custom-control-label" for="checkAll"></label>
+                                    </div>
+                                </div>
+                            </th>
                             <th>ردیف</th>
-                            <th style="padding: 2vh 15vh">عنوان</th>
-                            <th style="padding: 2vh 15vh">توظیحات</th>
+                            <th>عنوان</th>
+                            <th>توظیحات</th>
+                            <th>اولویت</th>
+                            <th>وظعیت</th>
+                            <th>زمان ساخته شده</th>
+                        </tr>
                         </tr>
                         </thead>
                         <tbody>
                         @php($row = 1)
                         @foreach($units as $unit)
                             <tr>
+                                <td>
+                                    <div class="checkbox mr-0 align-self-center">
+                                        <div class="custom-control custom-checkbox ">
+                                            <input type="checkbox" class="custom-control-input"
+                                                   id="customCheckBox{{$row}}"
+                                                   required="" onclick="getSelectedItems({{$unit->id}})">
+                                            <label class="custom-control-label" for="customCheckBox{{$row}}"></label>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td>{{$row++}}</td>
-                                <td style="padding: 2vh 15vh">{{$unit->title}}</td>
-                                <td style="padding: 2vh 15vh">{{$unit->description}}</td>
+                                <td>{{$unit->title}}</td>
+                                <td>{{$unit->description}}</td>
+                                <td>{{$unit->ticketPriority->title}}</td>
+                                <td>@if($unit->is_active)
+                                        <span class="badge badge-rounded badge-success">فعال</span>
+                                    @else
+                                        <span class="badge badge-rounded badge-danger">غیر فعال</span>
+                                    @endif </td>
+                                <td>{{\Morilog\Jalali\Jalalian::fromDateTime($unit->created_at)->format('%A, %d %B %Y')}}</td>
                                 <td>
                                     <div class="d-flex">
                                         <form action="{{route('unit.show',$unit)}}" method="GET">

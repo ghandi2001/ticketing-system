@@ -17,6 +17,8 @@ class CreateUnitsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('description')->nullable();
+            $table->unsignedBigInteger('ticket_priority_id');
+            $table->foreign('ticket_priority_id')->references('id')->on('ticket_priorities');
             $table->boolean('is_active')->default(true);
             $table->softDeletes();
             $table->timestamps();
