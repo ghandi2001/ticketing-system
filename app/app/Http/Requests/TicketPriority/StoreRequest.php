@@ -26,7 +26,6 @@ class StoreRequest extends FormRequest
         return [
             'title' => 'required|min:3|max:255',
             'description' => 'required|min:3|max:255',
-            'type_of_priority'=>'required|in:ticketType,unit'
         ];
     }
 }
