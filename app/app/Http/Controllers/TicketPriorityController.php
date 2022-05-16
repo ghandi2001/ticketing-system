@@ -88,11 +88,11 @@ class TicketPriorityController extends Controller
 
     public function collectiveChangeStatus(Request $request)
     {
-        $activatedTicketTypes = TicketPriority::whereIn('id', $request->input('data'))->where('is_active', '=', 1)->get()->pluck('id');
-        $noneActivatedTicketTypes = TicketPriority::whereIn('id', $request->input('data'))->where('is_active', '=', 0)->get()->pluck('id');
+        $activatedTicketPriorities = TicketPriority::whereIn('id', $request->input('data'))->where('is_active', '=', 1)->get()->pluck('id');
+        $noneActivatedTicketPriorities = TicketPriority::whereIn('id', $request->input('data'))->where('is_active', '=', 0)->get()->pluck('id');
 
-        TicketPriority::whereIn('id', $activatedTicketTypes)->update(['is_active' => 0]);
-        TicketPriority::whereIn('id', $noneActivatedTicketTypes)->update(['is_active' => 1]);
+        TicketPriority::whereIn('id', $activatedTicketPriorities)->update(['is_active' => 0]);
+        TicketPriority::whereIn('id', $noneActivatedTicketPriorities)->update(['is_active' => 1]);
 
         return response()->json('mission successful.', '200');
     }
