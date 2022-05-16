@@ -25,7 +25,9 @@ class StoreRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|max:255',
-            'description' => 'required|min:3|max:255'
+            'description' => 'required|min:3|max:255',
+            'unit_id' => 'required|exists:units,id',
+            'ticket_priority_id' => 'required|exists:ticket_priorities,id',
         ];
     }
 }

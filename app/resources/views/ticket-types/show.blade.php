@@ -10,6 +10,9 @@
                             <div class="new-arrival-content pr col-md-12">
                                 <h3>عنوان : {{$ticketType->title}}</h3>
                                 <p class="text-content">توظیحات : {{$ticketType->description}}</p>
+                                <p class="text-content">
+                                    اولویت : {{$ticketType->ticketPriority->title}}
+                                </p>
                             </div>
                         </div>
                     </div>
