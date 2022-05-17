@@ -15,17 +15,18 @@ class TicketController extends Controller
     public static function routes()
     {
         Route::resource('ticket', __CLASS__);
+        Route::get('ticket/chat/view/{ticket}', [__CLASS__, 'showChatRoom'])->name('ticket.chat.view');
     }
 
     public function index()
     {
-//        return view('')->with([
-//            'tickets' => Ticket::all()
-//        ]);
+        checkAccess('see tickets');
+        return view('tickets.index')->with('tickets', Ticket::all());
     }
 
     public function create()
     {
+        checkAccess('add ticket');
         return view('tickets.create')->with([
             'ticketPriorities' => TicketPriority::all(),
             'ticketTypes' => TicketType::all(),
@@ -34,6 +35,7 @@ class TicketController extends Controller
 
     public function store(StoreRequest $request)
     {
+        checkAccess('add ticket');
         $ticket = new Ticket();
         $ticket->title = $request->title;
         $ticket->description = $request->description;
@@ -47,6 +49,7 @@ class TicketController extends Controller
 
     public function show(Ticket $ticketGroup)
     {
+        checkAccess('see ticket');
 //        return view('ticket-groups.show')->with('ticketGroup', $ticketGroup);
     }
 
@@ -67,5 +70,10 @@ class TicketController extends Controller
 //        if ($ticketGroup->delete())
 //            redirect()->back()->with('message', 'delete successfully.');
 //        return redirect()->back()->with('message', 'delete not successfully.');
+    }
+
+    public function showChatRoom(Ticket $ticket)
+    {
+        return view('tickets.chat');
     }
 }

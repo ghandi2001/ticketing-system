@@ -24,26 +24,30 @@ class UserController extends Controller
 
     public function index()
     {
+        checkAccess('see users');
         return view('users.index')->with('users', User::all());
     }
 
     public function importUsersForm()
     {
+        checkAccess('import users');
         return view('users.import');
     }
 
     public function importUsers()
     {
-
+        checkAccess('import users');
     }
 
     public function create()
     {
+        checkAccess('add user');
         return view('users.create');
     }
 
     public function store(StoreRequest $request)
     {
+        checkAccess('add user');
         $user = new User();
         $user->name = $request->name;
         $user->surname = $request->surname;
@@ -64,16 +68,19 @@ class UserController extends Controller
 
     public function show(User $user)
     {
+        checkAccess('see user');
         //
     }
 
     public function edit(User $user)
     {
+        checkAccess('edit user');
         return view('users.create')->with('user', $user);
     }
 
     public function update(User $user, UpdateRequest $request)
     {
+        checkAccess('edit user');
         if ($user->update(['name' => $request->name, 'surname' => $request->surname, 'phone_number' => $request->phone_number]))
             return redirect()->route('user.index')->with('message', 'updated successfully.');
         return redirect()->back()->with('message', 'updated not successfully.');
@@ -81,6 +88,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        checkAccess('delete user');
         if ($user->delete()) {
             redirect()->back()->with('message', 'delete successfully.');
         }
@@ -89,6 +97,7 @@ class UserController extends Controller
 
     public function collectiveDestruction(Request $request)
     {
+        checkAccess('delete user');
         if (in_array(Auth::id(), $request->input('data'))) {
             return response()->json('you cant delete your self.', '403');
         }
@@ -99,6 +108,7 @@ class UserController extends Controller
 
     public function collectiveChangeStatus(Request $request)
     {
+        checkAccess('edit user');
         if (in_array(Auth::id(), $request->input('data'))) {
             return response()->json('you cant disable your self.', '403');
         }

@@ -24,16 +24,19 @@ class AnswersController extends Controller
 
     public function index()
     {
+        checkAccess('see readyAnswers');
         return view('answers.index')->with('answers', Answer::all());
     }
 
     public function create()
     {
+        checkAccess('add readyAnswer');
         return view('answers.create');
     }
 
     public function store(StoreRequest $request)
     {
+        checkAccess('add readyAnswer');
         $readyAnswer = new Answer();
         $readyAnswer->answer = $request->answer;
         if ($readyAnswer->save()) {
@@ -44,21 +47,24 @@ class AnswersController extends Controller
 
     public function show(Answer $answer)
     {
+        checkAccess('see readyAnswer');
         return view('answers.show')->with('answer', $answer);
     }
 
     public function edit(Answer $answer)
     {
+        checkAccess('edit readyAnswer');
         return view('answers.create')->with('answer', $answer);
     }
 
     public function update(Answer $answer, UpdateRequest $request)
     {
-
+        checkAccess('edit readyAnswer');
     }
 
     public function destroy(Answer $answer)
     {
+        checkAccess('delete readyAnswer');
         if ($answer->delete())
             redirect()->back()->with('message', 'delete successfully.');
         return redirect()->back()->with('message', 'delete not successfully.');
@@ -66,12 +72,15 @@ class AnswersController extends Controller
 
     public function collectiveDestruction(Request $request)
     {
+        checkAccess('delete readyAnswer');
         Answer::whereIn('id', $request->input('data'))->update(['deleted_at' => now()]);
         return response()->json('mission successful.', '200');
     }
 
     public function collectiveChangeStatus(Request $request)
     {
+        checkAccess('edit readyAnswer');
+
         $activatedAnswers = Answer::whereIn('id', $request->input('data'))->where('is_active', '=', 1)->get()->pluck('id');
         $noneActivatedAnswers = Answer::whereIn('id', $request->input('data'))->where('is_active', '=', 0)->get()->pluck('id');
 
@@ -83,6 +92,8 @@ class AnswersController extends Controller
 
     public function showRelations(Answer $answer)
     {
+        checkAccess('see readyAnswer relations');
+
         return view('answers.relations')->with([
             'answer' => $answer,
             'answerTicket' => AnswerTicket::where('answer_id', $answer->id),
@@ -93,6 +104,8 @@ class AnswersController extends Controller
 
     public function storeOrDestructRelations(Answer $answer, Request $request)
     {
+        checkAccess('edit readyAnswer relations');
+
         if ($request->input('type') == 'priority') {
             $answerTicket = AnswerTicket::where('answer_id', $answer->id)->where('ticket_priority_id', $request->input('data'))->first();
             if ($answerTicket) {

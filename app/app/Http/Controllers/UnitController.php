@@ -21,16 +21,19 @@ class UnitController extends Controller
 
     public function index()
     {
+        checkAccess('see units');
         return view('units.index')->with('units', Unit::all());
     }
 
     public function create()
     {
+        checkAccess('add unit');
         return view('units.create')->with('ticketPriorities', TicketPriority::all());
     }
 
     public function store(StoreRequest $request)
     {
+        checkAccess('add unit');
         $unit = new Unit();
         $unit->title = $request->title;
         $unit->description = $request->description;
@@ -43,6 +46,7 @@ class UnitController extends Controller
 
     public function show(Unit $unit)
     {
+        checkAccess('see unit');
         return view('units.show')->with([
             'unit' => $unit
         ]);
@@ -50,6 +54,7 @@ class UnitController extends Controller
 
     public function edit(Unit $unit)
     {
+        checkAccess('edit unit');
         return view('units.create')->with([
             'unit' => $unit,
             'ticketPriorities' => TicketPriority::all()
@@ -58,6 +63,7 @@ class UnitController extends Controller
 
     public function update(Unit $unit, UpdateRequest $request)
     {
+        checkAccess('edit unit');
         if ($unit->update(['title' => $request->title, 'description' => $request->description, 'ticket_priority_id' => $request->ticket_priority_id]))
             return redirect()->route('unit.index')->with('message', 'delete successfully.');
         return redirect()->back()->with('message', 'delete not successfully.');
@@ -65,6 +71,7 @@ class UnitController extends Controller
 
     public function destroy(Unit $unit)
     {
+        checkAccess('delete unit');
         if ($unit->delete())
             redirect()->back()->with('message', 'delete successfully.');
         return redirect()->back()->with('error', 'delete not successfully.');
@@ -72,12 +79,14 @@ class UnitController extends Controller
 
     public function collectiveDestruction(Request $request)
     {
+        checkAccess('delete unit');
         Unit::whereIn('id', $request->input('data'))->update(['deleted_at' => now()]);
         return response()->json('mission successful.', '200');
     }
 
     public function collectiveChangeStatus(Request $request)
     {
+        checkAccess('edit unit');
         $activatedUnit = Unit::whereIn('id', $request->input('data'))->where('is_active', '=', 1)->get()->pluck('id');
         $noneActivatedUnit = Unit::whereIn('id', $request->input('data'))->where('is_active', '=', 0)->get()->pluck('id');
 

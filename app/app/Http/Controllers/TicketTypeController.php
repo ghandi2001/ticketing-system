@@ -23,11 +23,13 @@ class TicketTypeController extends Controller
 
     public function index()
     {
+        checkAccess('see ticketTypes');
         return view('ticket-types.index')->with('ticketTypes', TicketType::all());
     }
 
     public function create()
     {
+        checkAccess('add ticketType');
         return view('ticket-types.create')->with([
             'units' => Unit::all(),
             'ticketPriorities' => TicketPriority::all()
@@ -36,6 +38,7 @@ class TicketTypeController extends Controller
 
     public function store(StoreRequest $request)
     {
+        checkAccess('add ticketType');
         $ticketType = new TicketType();
         $ticketType->title = $request->title;
         $ticketType->description = $request->description;
@@ -49,11 +52,13 @@ class TicketTypeController extends Controller
 
     public function show(TicketType $ticketType)
     {
+        checkAccess('see ticketType');
         return view('ticket-types.show')->with('ticketType', $ticketType);
     }
 
     public function edit(TicketType $ticketType)
     {
+        checkAccess('edit ticketType');
         return view('ticket-types.create')->with([
             'ticketType' => $ticketType,
             'ticketPriorities' => TicketPriority::all(),
@@ -63,6 +68,7 @@ class TicketTypeController extends Controller
 
     public function update(TicketType $ticketType, UpdateRequest $request)
     {
+        checkAccess('edit ticketType');
         if ($ticketType->update([
             'title' => $request->title,
             'description' => $request->description,
@@ -74,6 +80,7 @@ class TicketTypeController extends Controller
 
     public function destroy(TicketType $ticketType)
     {
+        checkAccess('delete ticketType');
         if ($ticketType->delete())
             redirect()->back()->with('message', 'delete successfully.');
         return redirect()->back()->with('error', 'delete not successfully.');
@@ -81,17 +88,20 @@ class TicketTypeController extends Controller
 
     public function getUnitPriority(Request $request)
     {
+        checkAccess('edit ticketType');
         return response(Unit::findOrFail($request->input('unit_id')), '200');
     }
 
     public function collectiveDestruction(Request $request)
     {
+        checkAccess('delete ticketType');
         TicketType::whereIn('id', $request->input('data'))->update(['deleted_at' => now()]);
         return response()->json('mission successful.', '200');
     }
 
     public function collectiveChangeStatus(Request $request)
     {
+        checkAccess('edit ticketType');
         $activatedTicketTypes = TicketType::whereIn('id', $request->input('data'))->where('is_active', '=', 1)->get()->pluck('id');
         $noneActivatedTicketTypes = TicketType::whereIn('id', $request->input('data'))->where('is_active', '=', 0)->get()->pluck('id');
 

@@ -15,4 +15,15 @@ class Ticket extends Model
     protected $table = 'tickets';
 
     public $timestamps = true;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function ticketType()
+    {
+        return $this->belongsTo(TicketType::class);
+    }
+
 }

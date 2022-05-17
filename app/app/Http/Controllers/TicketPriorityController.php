@@ -22,11 +22,13 @@ class TicketPriorityController extends Controller
 
     public function index()
     {
+        checkAccess('see ticketPriorities');
         return view('ticket-priorities.index')->with('ticketPriorities', TicketPriority::all());
     }
 
     public function create()
     {
+        checkAccess('add ticketPriority');
         return view('ticket-priorities.create')->with([
             'ticketTypes' => TicketType::all(),
             'units' => Unit::all(),
@@ -35,6 +37,7 @@ class TicketPriorityController extends Controller
 
     public function store(StoreRequest $request)
     {
+        checkAccess('add ticketPriority');
         $ticketPriority = new TicketPriority();
         $ticketPriority->title = $request->title;
         $ticketPriority->description = $request->description;
@@ -46,11 +49,13 @@ class TicketPriorityController extends Controller
 
     public function show(TicketPriority $ticketPriority)
     {
+        checkAccess('see ticketPriority');
         return view('ticket-priorities.show')->with('ticketPriority', $ticketPriority);
     }
 
     public function edit(TicketPriority $ticketPriority)
     {
+        checkAccess('edit ticketPriority');
         if ($ticketPriority->unit_id) {
             $state = 'unit';
         } else {
@@ -67,6 +72,7 @@ class TicketPriorityController extends Controller
 
     public function update(TicketPriority $ticketPriority, UpdateRequest $request)
     {
+        checkAccess('edit ticketPriority');
         if ($ticketPriority->updateOrFail([
             'title' => $request->title,
             'description' => $request->description,
@@ -75,6 +81,7 @@ class TicketPriorityController extends Controller
 
     public function destroy(TicketPriority $ticketPriority)
     {
+        checkAccess('delete ticketPriority');
         if ($ticketPriority->delete())
             redirect()->back()->with('message', 'delete successfully.');
         return redirect()->back()->with('message', 'delete not successfully.');
@@ -82,12 +89,14 @@ class TicketPriorityController extends Controller
 
     public function collectiveDestruction(Request $request)
     {
+        checkAccess('delete ticketPriority');
         TicketPriority::whereIn('id', $request->input('data'))->update(['deleted_at' => now()]);
         return response()->json('mission successful.', '200');
     }
 
     public function collectiveChangeStatus(Request $request)
     {
+        checkAccess('edit ticketPriority');
         $activatedTicketPriorities = TicketPriority::whereIn('id', $request->input('data'))->where('is_active', '=', 1)->get()->pluck('id');
         $noneActivatedTicketPriorities = TicketPriority::whereIn('id', $request->input('data'))->where('is_active', '=', 0)->get()->pluck('id');
 
