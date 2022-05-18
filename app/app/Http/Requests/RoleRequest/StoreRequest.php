@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\RoleRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone_number' => 'required|min:11|max:11',
-            'name' => 'required|min:3|max:255',
-            'surname' => 'required|min:3|max:255',
-//            'password' => 'confirmed|min:6|max:255',
-            'profile_picture' => '',
+            'name' => 'required|min:3'
         ];
     }
 }

@@ -10,15 +10,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
 
     public static function routes()
     {
-        Route::get('/user/import', [__CLASS__, 'importUsersForm'])->name('user.import.show');
         Route::post('/user/collective/destruction', [__CLASS__, 'collectiveDestruction'])->name('user.collective.collective.destruction');
         Route::post('/user/collective/change/status', [__CLASS__, 'collectiveChangeStatus'])->name('user.collective.changeStatus');
+        Route::post('/user/update/profile/{user}', [__CLASS__, 'updateUserProfile'])->name('user.update.profile');
+        Route::get('/user/collective/export/', [__CLASS__, 'export'])->name('user.collective.export');
+        Route::get('/user/collective/import', [__CLASS__, 'importUsersForm'])->name('user.import.show');
         Route::resource('user', __CLASS__);
     }
 
@@ -42,7 +45,7 @@ class UserController extends Controller
     public function create()
     {
         checkAccess('add user');
-        return view('users.create');
+        return view('users.create')->with('roles', Role::all());
     }
 
     public function store(StoreRequest $request)
@@ -54,11 +57,8 @@ class UserController extends Controller
         $user->phone_number = $request->phone_number;
         $user->personnel_code = $request->personnel_code;
         $user->password = Hash::make($request->password);
-
-        $path = Storage::putFileAs(
-            'uploads/avatars', $request->file('profile_picture'), time()
-        );
-        $user->profile_picture = $path;
+        $user->profile_picture = 'images/avatar/man.png';
+        $user->assignRole($request->role_name);
 
         if ($user->save()) {
             return redirect()->back()->with('message', 'insert successfully.');
@@ -69,13 +69,22 @@ class UserController extends Controller
     public function show(User $user)
     {
         checkAccess('see user');
-        //
+        if ($user->id == Auth::user()->id) {
+            return view('users.profile')->with([
+                'user' => $user
+            ]);
+        }else{
+            return abort(403);
+        }
     }
 
     public function edit(User $user)
     {
         checkAccess('edit user');
-        return view('users.create')->with('user', $user);
+        return view('users.create')->with([
+            'roles' => Role::all(),
+            'user' => $user
+        ]);
     }
 
     public function update(User $user, UpdateRequest $request)
@@ -120,5 +129,30 @@ class UserController extends Controller
         User::whereIn('id', $noneActivatedUsers)->update(['has_accessed' => 1]);
 
         return response()->json('mission successful.', '200');
+    }
+
+    public function export()
+    {
+//        return (new UsersExport)->withHeadings();
+    }
+
+    public function updateUserProfile(User $user, UpdateRequest $request)
+    {
+        if ($user->id == Auth::user()->id) {
+            $user->update(['name' => $request->name, 'surname' => $request->surname, 'phone_number' => $request->phone_number]);
+            if ($request->file('profile_picture')) {
+                $file = $request->file('profile_picture');
+                $filename = date('YmdHi') . $file->getClientOriginalName();
+                $file->move(public_path('public/images/profile/'), $filename);
+                $user->update(['profile_picture' => 'public/images/profile/' . $filename]);
+            }
+
+            if (isset($request->password)) {
+                $user->update(['password' => Hash::make($request->password)]);
+            }
+
+            return redirect()->back()->with('message', 'user profile updated successfully');
+        }
+        return abort(403);
     }
 }

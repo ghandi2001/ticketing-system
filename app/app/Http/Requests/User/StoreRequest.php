@@ -29,7 +29,7 @@ class StoreRequest extends FormRequest
             'phone_number'=>'required|unique:users,phone_number',
             'personnel_code'=>'required|unique:users,personnel_code',
 //            'profile_picture'=>'required|file|mimes:jpg,png',
-            'password'=>'required',
+            'password' => 'confirmed|min:6|max:255',
         ];
     }
 }

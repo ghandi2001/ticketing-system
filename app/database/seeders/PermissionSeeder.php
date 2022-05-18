@@ -53,6 +53,13 @@ class PermissionSeeder extends Seeder
         Permission::create(['name'=>'import users']);
         Permission::create(['name'=>'export users']);
 
+        Permission::create(['name'=>'see roles']);
+        Permission::create(['name'=>'edit role']);
+        Permission::create(['name'=>'add role']);
+        Permission::create(['name'=>'delete role']);
+        Permission::create(['name'=>'show rolePermissions']);
+        Permission::create(['name'=>'edit rolePermissions']);
+
         Permission::create(['name'=>'see tickets']);
         Permission::create(['name'=>'see ticket']);
         Permission::create(['name'=>'add ticket']);

@@ -138,6 +138,7 @@
                     <th>نام</th>
                     <th>نام خانوادگی</th>
                     <th>شماره تلفن</th>
+                    <th>نقش</th>
                     <th>وظعیت دسترسی</th>
                     <th></th>
                 </tr>
@@ -160,6 +161,7 @@
                         <td>{{$user->name}}</td>
                         <td>{{$user->surname}}</td>
                         <td>{{$user->phone_number}}</td>
+                        <td>{{$user->getRoleNames()->first()}}</td>
                         <td>@if($user->has_accessed)
                                 <span class="badge badge-rounded badge-success">فعال</span>
                             @else

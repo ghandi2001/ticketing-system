@@ -2,43 +2,66 @@
     <div class="deznav-scroll">
         <ul class="metismenu" id="menu">
             <li>
-                <a href="x.html" class="ai-icon" aria-expanded="false">
+                <a href="{{route('dashboard')}}" class="ai-icon" aria-expanded="false">
                     <i class="flaticon-381-home-2"></i>
                     <span class="nav-text">صفحه اصلی</span>
                 </a>
             </li>
-            <li>
-                <a class="ai-icon" href="javascript:void()" aria-expanded="false">
-                    <i class="flaticon-381-newspaper"></i>
-                    <span class="nav-text">امور مربوط به تیکت ها</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="{{route('ticket.create')}}">ثبت تیکت</a></li>
-                    <li><a href="{{route('ticket.index')}}">مشاهده تیکت ها</a></li>
-                </ul>
-            </li>
-            <li>
-                <a class="ai-icon" href="javascript:void()" aria-expanded="false">
-                    <i class="flaticon-381-networking"></i>
-                    <span class="nav-text">مدیریت و تنظیمات تیکت ها</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="{{route('unit.index')}}">بخش</a></li>
-                    <li><a href="{{route('ticket-type.index')}}">نوع های تیکت</a></li>
-                    <li><a href="{{route('ticket-priority.index')}}">اولویت بندی های تیکت</a></li>
-                    <li><a href="{{route('answer.index')}}">جواب های آماده برای تیکت ها</a></li>
-                </ul>
-            </li>
-            <li>
-                <a class="ai-icon" href="javascript:void()" aria-expanded="false">
-                    <i class="flaticon-381-user-2"></i>
-                    <span class="nav-text">مدیریت کاربران و دسترسی ها</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="{{route('user.index')}}">نمایش کاربران</a></li>
-                    <li><a href="{{route('user.import.show')}}">وارد کردن کاربران</a></li>
-                </ul>
-            </li>
+            @if(checkAnyAccessToTemplate(['add ticket','see ticket','see tickets','close ticket']))
+                <li>
+                    <a class="ai-icon" href="javascript:void()" aria-expanded="false">
+                        <i class="flaticon-381-newspaper"></i>
+                        <span class="nav-text">امور مربوط به تیکت ها</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        @if(checkAnyAccessToTemplate('add ticket'))
+                            <li><a href="{{route('ticket.create')}}">ثبت تیکت</a></li>
+                        @endif
+                        @if(checkAnyAccessToTemplate(['see tickets','see ticket']))
+                            <li><a href="{{route('ticket.index')}}">مشاهده تیکت ها</a></li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
+
+            @if(checkAnyAccessToTemplate(['see units','see ticketTypes','see ticketPriorities','see readyAnswers']))
+                <li>
+                    <a class="ai-icon" href="javascript:void()" aria-expanded="false">
+                        <i class="flaticon-381-networking"></i>
+                        <span class="nav-text">مدیریت و تنظیمات تیکت ها</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        @if(checkAnyAccessToTemplate('see units'))
+                            <li><a href="{{route('unit.index')}}">بخش</a></li>
+                        @endif
+                        @if(checkAnyAccessToTemplate('see ticketTypes'))
+                            <li><a href="{{route('ticket-type.index')}}">نوع های تیکت</a></li>
+                        @endif
+                        @if(checkAnyAccessToTemplate('see ticketPriorities'))
+                            <li><a href="{{route('ticket-priority.index')}}">اولویت بندی های تیکت</a></li>
+                        @endif
+                        @if(checkAnyAccessToTemplate('see readyAnswers'))
+                            <li><a href="{{route('answer.index')}}">جواب های آماده برای تیکت ها</a></li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
+            @if(checkAnyAccessToTemplate(['see users','import users']))
+                <li>
+                    <a class="ai-icon" href="javascript:void()" aria-expanded="false">
+                        <i class="flaticon-381-user-2"></i>
+                        <span class="nav-text">مدیریت کاربران و دسترسی ها</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        @if(checkAnyAccessToTemplate('see users'))
+                            <li><a href="{{route('user.index')}}">نمایش کاربران</a></li>
+                        @endif
+                        @if(checkAnyAccessToTemplate('import users'))
+                            <li><a href="{{route('user.import.show')}}">وارد کردن کاربران</a></li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
         </ul>
         <div class="copyright">
             <p>داشبورد مدیریت بلیط تیکسیا © 1399 کلیه حقوق محفوظ است</p>

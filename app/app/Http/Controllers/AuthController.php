@@ -15,7 +15,7 @@ class AuthController extends Controller
         Route::prefix('auth')->group(function () {
             Route::get('login', [__CLASS__, 'index'])->name('login.show');
             Route::post('custom-login', [__CLASS__, 'customLogin'])->name('login');
-            Route::post('sign-out', [__CLASS__, 'signOut'])->name('signOut');
+            Route::post('logout', [__CLASS__, 'signOut'])->name('logout');
         });
     }
 
@@ -33,10 +33,14 @@ class AuthController extends Controller
 
         $credentials = $request->only('phone_number', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->route('dashboard');
+            $request->session()->regenerate();
+
+            return redirect()->intended('dashboard');
         }
 
-        return redirect()->route('login.show')->with('message', 'username or password is invalid');
+        return back()->withErrors([
+            'phone_number' => 'username or password is invalid.',
+        ])->onlyInput('email');
     }
 
     public function dashboard()
@@ -53,6 +57,6 @@ class AuthController extends Controller
         Session::flush();
         Auth::logout();
 
-        return Redirect('auth.login');
+        return redirect()->route('auth.login');
     }
 }

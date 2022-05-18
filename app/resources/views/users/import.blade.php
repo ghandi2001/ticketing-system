@@ -14,9 +14,11 @@
                                 <h4 class="card-title">دریافت نمونه اکسل</h4>
                             </div>
                             <div class="card-body" style="text-align: center">
-                                <div class="basic-form">
-                                    <button class="btn btn-primary m-2">هویت را تأیید کنید</button>
-                                </div>
+                                <form action="{{route('user.collective.export')}}" method="GET">
+                                    <div class="basic-form">
+                                        <button type="submit" class="btn btn-primary m-2">هویت را تأیید کنید</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

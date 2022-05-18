@@ -34,4 +34,14 @@ class User extends Authenticatable
     protected $casts = [
         'phone_number_verified_at' => 'datetime',
     ];
+
+    public function getOpenTickets()
+    {
+        return $this->hasMany(Ticket::class)->count();
+    }
+
+    public function getClosedTickets()
+    {
+        return $this->hasMany(Ticket::class)->where('closed_at', null)->count();
+    }
 }

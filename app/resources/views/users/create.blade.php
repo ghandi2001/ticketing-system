@@ -5,9 +5,9 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">@if(isset($user))
-                        ویرایش واحد
+                        ویرایش کاربر
                     @else
-                        افزودن واحد
+                        افزودن کاربر
                     @endif</h4>
             </div>
             <div class="card-body">
@@ -54,32 +54,32 @@
                                     <label>گذرواژه</label>
                                     <input type="text" name="password" class="form-control" placeholder="گذرواژه">
                                 </div>
-                            @endif
-                            @if(!isset($user))
-                                <div class="form-group col-md-6 m-auto">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="profile_picture">
-                                        <label class="custom-file-label">عکس پروفایل</label>
-                                    </div>
+                                <div class="form-group col-md-6">
+                                    <label>تایید گذرواژه</label>
+                                    <input type="text" name="password_confirmation" class="form-control" placeholder="تایید گذرواژه">
                                 </div>
                             @endif
                             <div class="form-group col-md-6">
+                                <label>نقش</label>
+                                <select class="form-control" name="role_name">
+                                    <option value="none">انتخاب کنید</option>
+                                    @foreach($roles as $role)
+                                        <option value="{{$role->name}}"
+                                                @if(isset($user) && $user->getRoleNames()->first() == $role->name) selected @endif>
+                                            {{$role->name}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
                                 <button type="submit" class="btn btn-primary m-1">ثبت</button>
                                 <button type="reset" class="btn btn-default m-1">برگشت</button>
                             </div>
+
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-@endsection
-
-@section('attempt-scripts')
-    <script type="text/javascript">
-        // $(".custom-file-input").on("change", function () {
-        //     var fileName = $(this).val().split("\\").pop();
-        //     $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-        // });
-    </script>
 @endsection

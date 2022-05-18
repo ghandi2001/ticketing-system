@@ -29502,3 +29502,14 @@ input:checked+.slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+
+.custom-label{
+    display: inline-block;
+    background-color: #222fb9;
+    color: white;
+    padding: 0.5rem;
+    font-family: sans-serif;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    margin-top: 1rem;
+}
