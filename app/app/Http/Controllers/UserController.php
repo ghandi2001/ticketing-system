@@ -143,8 +143,8 @@ class UserController extends Controller
             if ($request->file('profile_picture')) {
                 $file = $request->file('profile_picture');
                 $filename = date('YmdHi') . $file->getClientOriginalName();
-                $file->move(public_path('public/images/profile/'), $filename);
-                $user->update(['profile_picture' => 'public/images/profile/' . $filename]);
+                $file->move(public_path('uploads/images/profile/'), $filename);
+                $user->update(['profile_picture' => 'uploads/images/profile/' . $filename]);
             }
 
             if (isset($request->password)) {
