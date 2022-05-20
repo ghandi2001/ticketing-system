@@ -40,7 +40,7 @@ class RoleController extends Controller
 
     public function show(Role $role)
     {
-        checkAccess('see role');
+        checkAccess('show rolePermissions');
         return view('roles.permissions')->with([
             'role' => $role,
             'permissions' => Permission::all()
@@ -83,6 +83,7 @@ class RoleController extends Controller
 
     public function editPermissionOfRole(Role $role, Request $request)
     {
+        checkAccess('edit rolePermissions');
         if ($role->name == 'superAdmin' || $role->id == 1) {
             return response()->json('can\'t edit this', '403');
         }

@@ -54,7 +54,7 @@
                                                @if($role->hasPermissionTo($permission->name)) checked @endif
                                                onchange="editPermission(this.value)">
                                         <label class="custom-control-label"
-                                               for="priorityCheckBox{{$row++}}">{{$permission->name}}
+                                               for="priorityCheckBox{{$row++}}">{{__('permissions.'.$permission->name)}}
                                         </label>
                                     </div>
                                 </div>
