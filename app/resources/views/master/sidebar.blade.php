@@ -59,6 +59,9 @@
                         @if(checkAnyAccessToTemplate('import users'))
                             <li><a href="{{route('user.import.show')}}">وارد کردن کاربران</a></li>
                         @endif
+                        @if(checkAnyAccessToTemplate('see roles'))
+                            <li><a href="{{route('role.index')}}">نقش ها</a></li>
+                        @endif
                     </ul>
                 </li>
             @endif

@@ -79,12 +79,21 @@
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-primary dropdown-toggle sharp" data-toggle="dropdown">عملیات
                     </button>
-                    <div class="dropdown-menu">
-                        <a href="{{route('ticket-type.create')}}" class="dropdown-item">افزودن</a>
-                        <a href="javascript:void(0);" onclick="deleteSelectedTypes()" class="dropdown-item">حذف</a>
-                        <a href="javascript:void(0);" onclick="changeStatusOfSelectedTypes()"
-                           class="dropdown-item">فعال و غیر فعال کردن موجودیت ها</a>
-                    </div>
+                    @if(checkAnyAccessToTemplate(['add ticketType','delete ticketType','edit ticketType']))
+                        <div class="dropdown-menu">
+                            @if(checkAnyAccessToTemplate('add ticketType'))
+                                <a href="{{route('ticket-type.create')}}" class="dropdown-item">افزودن</a>
+                            @endif
+                            @if(checkAnyAccessToTemplate('delete ticketType'))
+                                <a href="javascript:void(0);" onclick="deleteSelectedTypes()"
+                                   class="dropdown-item">حذف</a>
+                            @endif
+                            @if(checkAnyAccessToTemplate('edit ticketType'))
+                                <a href="javascript:void(0);" onclick="changeStatusOfSelectedTypes()"
+                                   class="dropdown-item">فعال و غیر فعال کردن موجودیت ها</a>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="card-body">
@@ -135,18 +144,26 @@
                                 <td>{{$ticketType->ticketPriority->title}}</td>
                                 <td>
                                     <div class="d-flex">
-                                        <form action="{{route('ticket-type.show',$ticketType)}}" method="GET">
-                                            <input type="submit" class="btn btn-info btn-sm ml-2 px-4" value="جزئیات">
-                                        </form>
-                                        <form action="{{route('ticket-type.edit',$ticketType)}}" method="GET">
-                                            <input type="submit" class="btn btn-primary btn-sm ml-2 px-4"
-                                                   value="ویرایش">
-                                        </form>
-                                        <form action="{{route('ticket-type.destroy',$ticketType)}}" method="POST">
-                                            @method('DELETE')
-                                            @csrf
-                                            <input type="submit" class="btn btn-danger btn-sm ml-2 px-4" value="حذف">
-                                        </form>
+                                        @if(checkAnyAccessToTemplate('see ticketType'))
+                                            <form action="{{route('ticket-type.show',$ticketType)}}" method="GET">
+                                                <input type="submit" class="btn btn-info btn-sm ml-2 px-4"
+                                                       value="جزئیات">
+                                            </form>
+                                        @endif
+                                        @if(checkAnyAccessToTemplate('edit ticketType'))
+                                            <form action="{{route('ticket-type.edit',$ticketType)}}" method="GET">
+                                                <input type="submit" class="btn btn-primary btn-sm ml-2 px-4"
+                                                       value="ویرایش">
+                                            </form>
+                                        @endif
+                                        @if(checkAnyAccessToTemplate('delete ticketType'))
+                                            <form action="{{route('ticket-type.destroy',$ticketType)}}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <input type="submit" class="btn btn-danger btn-sm ml-2 px-4"
+                                                       value="حذف">
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

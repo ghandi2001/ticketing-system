@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 
 class PermissionSeeder extends Seeder
@@ -39,8 +40,10 @@ class PermissionSeeder extends Seeder
         Permission::create(['name'=>'export ticketPriorities']);
 
         Permission::create(['name'=>'see readyAnswers']);
+        Permission::create(['name'=>'see readyAnswer relations']);
         Permission::create(['name'=>'see readyAnswer']);
         Permission::create(['name'=>'edit readyAnswer']);
+        Permission::create(['name'=>'edit readyAnswer relations']);
         Permission::create(['name'=>'add readyAnswer']);
         Permission::create(['name'=>'delete readyAnswer']);
         Permission::create(['name'=>'export readyAnswers']);
@@ -62,6 +65,7 @@ class PermissionSeeder extends Seeder
 
         Permission::create(['name'=>'see tickets']);
         Permission::create(['name'=>'see ticket']);
+        Permission::create(['name'=>'answer ticket']);
         Permission::create(['name'=>'add ticket']);
         Permission::create(['name'=>'close ticket']);
     }

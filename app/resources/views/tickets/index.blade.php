@@ -5,17 +5,6 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">تیکت ها</h4>
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-primary dropdown-toggle sharp" data-toggle="dropdown">عملیات
-                    </button>
-                    <div class="dropdown-menu">
-                        <a href="javascript:void(0);" onclick="/*deleteSelectedReadyAnswers() TODO::MAKE SOME CHANGES*/"
-                           class="dropdown-item">حذف</a>
-                        <a href="javascript:void(0);"
-                           onclick="/*changeStatusOfSelectedReadyAnswers() TODO::MAKE SOME CHANGES*/"
-                           class="dropdown-item">فعال و غیر فعال کردن موجودیت ها</a>
-                    </div>
-                </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive recentOrderTable">
@@ -65,16 +54,29 @@
                                     @endif </td>
                                 <td>{{$ticket->ticketType->ticketPriority->title}}</td>
                                 <td>{{\Morilog\Jalali\Jalalian::fromDateTime($ticket->created_at)->format('%A, %d %B %Y')}}</td>
-                                <td>@if($ticket->closed_at){{\Morilog\Jalali\Jalalian::fromDateTime($ticket->closed_at)->format('%A, %d %B %Y')}}@else - @endif</td>
+                                <td>@if($ticket->closed_at){{\Morilog\Jalali\Jalalian::fromDateTime($ticket->closed_at)->format('%A, %d %B %Y')}}@else
+                                        - @endif</td>
                                 <td>{{$ticket->user->name}} - {{$ticket->user->surname}}</td>
                                 <td>
                                     <div class="d-flex">
-                                        <form action="" method="GET">
-                                            <input type="submit" class="btn btn-info btn-sm ml-2 px-4" value="جزئیات">
-                                        </form>
-                                        <form action="{{route('ticket.chat.view',$ticket)}}" method="GET">
-                                            <input type="submit" class="btn btn-success btn-sm ml-2 px-4" value="پاسخ دهی">
-                                        </form>
+                                        @if(checkAnyAccessToTemplate('see ticket'))
+                                            <form action="" method="GET">
+                                                <input type="submit" class="btn btn-info btn-sm ml-2 px-4"
+                                                       value="جزئیات">
+                                            </form>
+                                        @endif
+                                        @if(checkAnyAccessToTemplate('answer ticket'))
+                                            <form action="{{route('ticket.chat.view',$ticket)}}" method="GET">
+                                                <input type="submit" class="btn btn-success btn-sm ml-2 px-4"
+                                                       value="پاسخ دهی">
+                                            </form>
+                                        @endif
+                                        @if(checkAnyAccessToTemplate('close ticket'))
+                                            <form action="" method="GET">
+                                                <input type="submit" class="btn btn-warning btn-sm ml-2 px-4"
+                                                       value="بستن تیکت">
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

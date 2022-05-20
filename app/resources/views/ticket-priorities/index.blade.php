@@ -79,12 +79,21 @@
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-primary dropdown-toggle sharp" data-toggle="dropdown">عملیات
                     </button>
-                    <div class="dropdown-menu">
-                        <a href="{{route('ticket-priority.create')}}" class="dropdown-item">افزودن</a>
-                        <a href="javascript:void(0);" onclick="deleteSelectedPriorities()" class="dropdown-item">حذف</a>
-                        <a href="javascript:void(0);" onclick="changeStatusOfSelectedPriorities()"
-                           class="dropdown-item">فعال و غیر فعال کردن موجودیت ها</a>
-                    </div>
+                    @if(checkAnyAccessToTemplate(['add ticketPriority','delete ticketPriority','edit ticketPriority']))
+                        <div class="dropdown-menu">
+                            @if(checkAnyAccessToTemplate('add ticketPriority'))
+                                <a href="{{route('ticket-priority.create')}}" class="dropdown-item">افزودن</a>
+                            @endif
+                            @if(checkAnyAccessToTemplate('delete ticketPriority'))
+                                <a href="javascript:void(0);" onclick="deleteSelectedPriorities()"
+                                   class="dropdown-item">حذف</a>
+                            @endif
+                            @if(checkAnyAccessToTemplate('edit ticketPriority'))
+                                <a href="javascript:void(0);" onclick="changeStatusOfSelectedPriorities()"
+                                   @endif
+                                   class="dropdown-item">فعال و غیر فعال کردن موجودیت ها</a>
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="card-body">
@@ -133,19 +142,29 @@
                                 <td>{{\Morilog\Jalali\Jalalian::fromDateTime($ticketPriority->created_at)->format('%A, %d %B %Y')}}</td>
                                 <td>
                                     <div class="d-flex">
-                                        <form action="{{route('ticket-priority.show',$ticketPriority)}}" method="GET">
-                                            <input type="submit" class="btn btn-info btn-sm ml-2 px-4" value="جزئیات">
-                                        </form>
-                                        <form action="{{route('ticket-priority.edit',$ticketPriority)}}" method="GET">
-                                            <input type="submit" class="btn btn-primary btn-sm ml-2 px-4"
-                                                   value="ویرایش">
-                                        </form>
-                                        <form action="{{route('ticket-priority.destroy',$ticketPriority)}}"
-                                              method="POST">
-                                            @method('DELETE')
-                                            @csrf
-                                            <input type="submit" class="btn btn-danger btn-sm ml-2 px-4" value="حذف">
-                                        </form>
+                                        @if(checkAnyAccessToTemplate('see ticketPriority'))
+                                            <form action="{{route('ticket-priority.show',$ticketPriority)}}"
+                                                  method="GET">
+                                                <input type="submit" class="btn btn-info btn-sm ml-2 px-4"
+                                                       value="جزئیات">
+                                            </form>
+                                        @endif
+                                        @if(checkAnyAccessToTemplate('edit ticketPriority'))
+                                            <form action="{{route('ticket-priority.edit',$ticketPriority)}}"
+                                                  method="GET">
+                                                <input type="submit" class="btn btn-primary btn-sm ml-2 px-4"
+                                                       value="ویرایش">
+                                            </form>
+                                        @endif
+                                        @if(checkAnyAccessToTemplate('delete ticketPriority'))
+                                            <form action="{{route('ticket-priority.destroy',$ticketPriority)}}"
+                                                  method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <input type="submit" class="btn btn-danger btn-sm ml-2 px-4"
+                                                       value="حذف">
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

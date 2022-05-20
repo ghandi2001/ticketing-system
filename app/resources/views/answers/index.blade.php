@@ -79,12 +79,22 @@
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-primary dropdown-toggle sharp" data-toggle="dropdown">عملیات
                     </button>
-                    <div class="dropdown-menu">
-                        <a href="{{route('answer.create')}}" class="dropdown-item">افزودن</a>
-                        <a href="javascript:void(0);" onclick="deleteSelectedReadyAnswers()" class="dropdown-item">حذف</a>
-                        <a href="javascript:void(0);" onclick="changeStatusOfSelectedReadyAnswers()"
-                           class="dropdown-item">فعال و غیر فعال کردن موجودیت ها</a>
-                    </div>
+                    @if(checkAnyAccessToTemplate(['add readyAnswer','delete readyAnswer','edit readyAnswer']))
+                        <div class="dropdown-menu">
+                            @if(checkAnyAccessToTemplate('add readyAnswer'))
+                                <a href="{{route('answer.create')}}" class="dropdown-item">افزودن</a>
+                            @endif
+                            @if(checkAnyAccessToTemplate('delete readyAnswer'))
+                                <a href="javascript:void(0);" onclick="deleteSelectedReadyAnswers()"
+                                   class="dropdown-item">حذف</a>
+                            @endif
+
+                            @if(checkAnyAccessToTemplate('edit readyAnswer'))
+                                <a href="javascript:void(0);" onclick="changeStatusOfSelectedReadyAnswers()"
+                                   class="dropdown-item">فعال و غیر فعال کردن موجودیت ها</a>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="card-body">
@@ -130,28 +140,40 @@
                                         <span class="badge badge-rounded badge-danger">غیر فعال</span>
                                     @endif </td>
                                 <td>{{\Morilog\Jalali\Jalalian::fromDateTime($answer->created_at)->format('%A, %d %B %Y')}}</td>
-                                <td  style="padding: 2vh 15vh"></td>
-                                <td>
-                                    <div class="d-flex">
-                                        <form action="{{route('answer.relations.view',$answer)}}" method="GET">
-                                            <input type="submit" class="btn btn-success btn-sm ml-2 px-4"
-                                                   value="ارتباط ها">
-                                        </form>
-                                        <form action="{{route('answer.show',$answer)}}" method="GET">
-                                            <input type="submit" class="btn btn-info btn-sm ml-2 px-4" value="جزئیات">
-                                        </form>
-                                        <form action="{{route('answer.edit',$answer)}}" method="GET">
-                                            <input type="submit" class="btn btn-primary btn-sm ml-2 px-4"
-                                                   value="ویرایش">
-                                        </form>
-                                        <form action="{{route('answer.destroy',$answer)}}"
-                                              method="POST">
-                                            @method('DELETE')
-                                            @csrf
-                                            <input type="submit" class="btn btn-danger btn-sm ml-2 px-4" value="حذف">
-                                        </form>
-                                    </div>
-                                </td>
+                                <td style="padding: 2vh 15vh"></td>
+                                @if(checkAnyAccessToTemplate(['see readyAnswer relations','see readyAnswer','edit readyAnswer','delete readyAnswer']))
+                                    <td>
+                                        <div class="d-flex">
+                                            @if(checkAnyAccessToTemplate('see readyAnswer relations'))
+                                                <form action="{{route('answer.relations.view',$answer)}}" method="GET">
+                                                    <input type="submit" class="btn btn-success btn-sm ml-2 px-4"
+                                                           value="ارتباط ها">
+                                                </form>
+                                            @endif
+                                            @if(checkAnyAccessToTemplate('see readyAnswer'))
+                                                <form action="{{route('answer.show',$answer)}}" method="GET">
+                                                    <input type="submit" class="btn btn-info btn-sm ml-2 px-4"
+                                                           value="جزئیات">
+                                                </form>
+                                            @endif
+                                            @if(checkAnyAccessToTemplate('edit readyAnswer'))
+                                                <form action="{{route('answer.edit',$answer)}}" method="GET">
+                                                    <input type="submit" class="btn btn-primary btn-sm ml-2 px-4"
+                                                           value="ویرایش">
+                                                </form>
+                                            @endif
+                                            @if(checkAnyAccessToTemplate('delete readyAnswer'))
+                                                <form action="{{route('answer.destroy',$answer)}}"
+                                                      method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <input type="submit" class="btn btn-danger btn-sm ml-2 px-4"
+                                                           value="حذف">
+                                                </form>
+                                            @endif
+                                        </div>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>

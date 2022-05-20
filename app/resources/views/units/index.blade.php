@@ -79,12 +79,21 @@
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-primary dropdown-toggle sharp" data-toggle="dropdown">عملیات
                     </button>
-                    <div class="dropdown-menu">
-                        <a href="{{route('unit.create')}}" class="dropdown-item">افزودن</a>
-                        <a href="javascript:void(0);" onclick="deleteSelectedUnits()" class="dropdown-item">حذف</a>
-                        <a href="javascript:void(0);" onclick="changeStatusOfSelectedUnits()"
-                           class="dropdown-item">فعال و غیر فعال کردن موجودیت ها</a>
-                    </div>
+                    @if(checkAnyAccessToTemplate(['add unit','delete unit','edit unit']))
+                        <div class="dropdown-menu">
+                            @if(checkAnyAccessToTemplate('add unit'))
+                                <a href="{{route('unit.create')}}" class="dropdown-item">افزودن</a>
+                            @endif
+                            @if(checkAnyAccessToTemplate('delete unit'))
+                                <a href="javascript:void(0);" onclick="deleteSelectedUnits()"
+                                   class="dropdown-item">حذف</a>
+                            @endif
+                            @if(checkAnyAccessToTemplate('edit unit'))
+                                <a href="javascript:void(0);" onclick="changeStatusOfSelectedUnits()"
+                                   class="dropdown-item">فعال و غیر فعال کردن موجودیت ها</a>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="card-body">
@@ -136,18 +145,26 @@
                                 <td>{{\Morilog\Jalali\Jalalian::fromDateTime($unit->created_at)->format('%A, %d %B %Y')}}</td>
                                 <td>
                                     <div class="d-flex">
-                                        <form action="{{route('unit.show',$unit)}}" method="GET">
-                                            <input type="submit" class="btn btn-info btn-sm ml-2 px-4" value="جزئیات">
-                                        </form>
-                                        <form action="{{route('unit.edit',$unit)}}" method="GET">
-                                            <input type="submit" class="btn btn-primary btn-sm ml-2 px-4"
-                                                   value="ویرایش">
-                                        </form>
-                                        <form action="{{route('unit.destroy',$unit)}}" method="POST">
-                                            @method('DELETE')
-                                            @csrf
-                                            <input type="submit" class="btn btn-danger btn-sm ml-2 px-4" value="حذف">
-                                        </form>
+                                        @if(checkAnyAccessToTemplate('see unit'))
+                                            <form action="{{route('unit.show',$unit)}}" method="GET">
+                                                <input type="submit" class="btn btn-info btn-sm ml-2 px-4"
+                                                       value="جزئیات">
+                                            </form>
+                                        @endif
+                                        @if(checkAnyAccessToTemplate('edit unit'))
+                                            <form action="{{route('unit.edit',$unit)}}" method="GET">
+                                                <input type="submit" class="btn btn-primary btn-sm ml-2 px-4"
+                                                       value="ویرایش">
+                                            </form>
+                                        @endif
+                                        @if(checkAnyAccessToTemplate('delete unit'))
+                                            <form action="{{route('unit.destroy',$unit)}}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <input type="submit" class="btn btn-danger btn-sm ml-2 px-4"
+                                                       value="حذف">
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

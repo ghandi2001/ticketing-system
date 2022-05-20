@@ -20,19 +20,19 @@ class RoleController extends Controller
 
     public function index()
     {
-//        checkAccess('see roles');
+        checkAccess('see roles');
         return view('roles.index')->with('roles', Role::all());
     }
 
     public function create()
     {
-//        checkAccess('add role');
+        checkAccess('add role');
         return view('roles.create');
     }
 
     public function store(StoreRequest $request)
     {
-//        checkAccess('add role');
+        checkAccess('add role');
         if (Role::create(['name' => $request->name]))
             return redirect()->route('role.index')->with('message', 'insert successfully.');
         return redirect()->back()->with('message', 'insert not successfully.');
@@ -40,6 +40,7 @@ class RoleController extends Controller
 
     public function show(Role $role)
     {
+        checkAccess('see role');
         return view('roles.permissions')->with([
             'role' => $role,
             'permissions' => Permission::all()
@@ -48,20 +49,20 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
+        checkAccess('edit role');
         return view('role.create')->with('role', $role);
-//        checkAccess('edit role');
     }
 
     public function update(Role $role, UpdateRequest $request)
     {
-//        checkAccess('edit role');
+        checkAccess('edit role');
         $role->update(['name' => $request->name]);
         return redirect()->route('role.index')->with('message', 'update successfully.');
     }
 
     public function destroy(Role $role)
     {
-//        checkAccess('delete role');
+        checkAccess('delete role');
         if ($role->name == 'superAdmin' || $role->id == 1) {
             return redirect()->back()->with('message', 'can\'t delete this role.');
         }
@@ -72,8 +73,8 @@ class RoleController extends Controller
 
     public function collectiveDestruction(Request $request)
     {
-//        checkAccess('delete role');
-        if (array_search('1', $request->input('data'))) {
+        checkAccess('delete role');
+        if (in_array(1  , $request->input('data'))) {
             return redirect()->back()->with('message', 'can\'t delete this role.');
         }
         Role::whereIn('id', $request->input('data'))->delete();

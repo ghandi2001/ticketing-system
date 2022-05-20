@@ -57,8 +57,16 @@ class RoleSeeder extends Seeder
         $superAdmin->givePermissionTo('import users');
         $superAdmin->givePermissionTo('export users');
 
+        $superAdmin->givePermissionTo('see roles');
+        $superAdmin->givePermissionTo('edit role');
+        $superAdmin->givePermissionTo('add role');
+        $superAdmin->givePermissionTo('delete role');
+        $superAdmin->givePermissionTo('show rolePermissions');
+        $superAdmin->givePermissionTo('edit rolePermissions');
+
         $superAdmin->givePermissionTo('see tickets');
         $superAdmin->givePermissionTo('see ticket');
+        $superAdmin->givePermissionTo('answer ticket');
         $superAdmin->givePermissionTo('add ticket');
         $superAdmin->givePermissionTo('close ticket');
 

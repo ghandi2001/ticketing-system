@@ -63,10 +63,17 @@
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-primary dropdown-toggle sharp" data-toggle="dropdown">عملیات
                     </button>
-                    <div class="dropdown-menu">
-                        <a href="{{route('role.create')}}" class="dropdown-item">افزودن</a>
-                        <a href="javascript:void(0);" onclick="deleteSelectedRoles()" class="dropdown-item">حذف</a>
-                    </div>
+                    @if(checkAnyAccessToTemplate(['add role','delete role']))
+                        <div class="dropdown-menu">
+                            @if(checkAnyAccessToTemplate('add role'))
+                                <a href="{{route('role.create')}}" class="dropdown-item">افزودن</a>
+                            @endif
+                            @if(checkAnyAccessToTemplate('delete role'))
+                                <a href="javascript:void(0);" onclick="deleteSelectedRoles()"
+                                   class="dropdown-item">حذف</a>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="card-body">
@@ -109,15 +116,21 @@
                                 <td>{{\Morilog\Jalali\Jalalian::fromDateTime($role->updated_at)->format('%A, %d %B %Y')}}</td>
                                 <td>
                                     <div class="d-flex">
-                                        <form action="{{route('role.show',$role)}}" method="GET">
-                                            <input type="submit" class="btn btn-info btn-sm ml-2 px-4" value="دسترسی ها">
-                                        </form>
-                                        <form action="{{route('role.destroy',$role)}}"
-                                              method="POST">
-                                            @method('DELETE')
-                                            @csrf
-                                            <input type="submit" class="btn btn-danger btn-sm ml-2 px-4" value="حذف">
-                                        </form>
+                                        @if(checkAnyAccessToTemplate('show rolePermissions'))
+                                            <form action="{{route('role.show',$role)}}" method="GET">
+                                                <input type="submit" class="btn btn-info btn-sm ml-2 px-4"
+                                                       value="دسترسی ها">
+                                            </form>
+                                        @endif
+                                        @if(checkAnyAccessToTemplate('delete role'))
+                                            <form action="{{route('role.destroy',$role)}}"
+                                                  method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <input type="submit" class="btn btn-danger btn-sm ml-2 px-4"
+                                                       value="حذف">
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
