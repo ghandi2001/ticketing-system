@@ -14,9 +14,9 @@
                                 <h4 class="card-title">دریافت نمونه اکسل</h4>
                             </div>
                             <div class="card-body" style="text-align: center">
-                                <form action="{{route('user.collective.export')}}" method="GET">
+                                <form action="{{route('user.sample.export')}}" method="GET">
                                     <div class="basic-form">
-                                        <button type="submit" class="btn btn-primary m-2">هویت را تأیید کنید</button>
+                                        <button type="submit" class="btn btn-primary m-2">دریافت نمونه اکسل</button>
                                     </div>
                                 </form>
                             </div>

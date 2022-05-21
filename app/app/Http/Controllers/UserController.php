@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
+use App\Exports\UsersSampleExport;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Models\User;
@@ -9,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -22,6 +24,7 @@ class UserController extends Controller
         Route::post('/user/update/profile/{user}', [__CLASS__, 'updateUserProfile'])->name('user.update.profile');
         Route::get('/user/collective/export/', [__CLASS__, 'export'])->name('user.collective.export');
         Route::get('/user/collective/import', [__CLASS__, 'importUsersForm'])->name('user.import.show');
+        Route::get('/user/collective/export/', [__CLASS__, 'sampleExport'])->name('user.sample.export');
         Route::resource('user', __CLASS__);
     }
 
@@ -73,7 +76,7 @@ class UserController extends Controller
             return view('users.profile')->with([
                 'user' => $user
             ]);
-        }else{
+        } else {
             return abort(403);
         }
     }
@@ -131,13 +134,21 @@ class UserController extends Controller
         return response()->json('mission successful.', '200');
     }
 
+    public function sampleExport()
+    {
+        checkAccess('import users');
+        return Excel::download(new UsersSampleExport(), 'sample-users.xlsx');
+    }
+
     public function export()
     {
-//        return (new UsersExport)->withHeadings();
+        checkAccess('export users');
+        return Excel::download(new UsersExport(), 'users.xlsx');
     }
 
     public function updateUserProfile(User $user, UpdateRequest $request)
     {
+        checkAccess('see user');
         if ($user->id == Auth::user()->id) {
             $user->update(['name' => $request->name, 'surname' => $request->surname, 'phone_number' => $request->phone_number]);
             if ($request->file('profile_picture')) {

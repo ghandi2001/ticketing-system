@@ -109,11 +109,15 @@
                                     </div>
                                 </div>
                             </div>
-                            @if(checkAnyAccessToTemplate(['edit user','delete user']))
+                            @if(checkAnyAccessToTemplate(['edit user','delete user','export users']))
                                 <div class="col-md-7 text-md-right">
                                     @if(checkAnyAccessToTemplate('edit user'))
                                         <a href="javascript:void(0);" onclick="changeStatusOfSelectedUsers()"
                                            class="btn btn-outline-primary rounded btn-sm px-4">فعال / غیر فعال </a>
+                                    @endif
+                                    @if(checkAnyAccessToTemplate('export users'))
+                                        <a href="{{route('user.collective.export')}}"
+                                           class="btn btn-warning rounded ml-2 btn-sm px-4">خروجی گرفتن از کاربران</a>
                                     @endif
                                     @if(checkAnyAccessToTemplate('delete user'))
                                         <a href="javascript:void(0);" onclick="deleteSelectedUsers()"
