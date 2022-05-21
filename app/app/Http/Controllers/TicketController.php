@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Ticket\StoreRequest;
 use App\Http\Requests\Ticket\UpdateRequest;
+use App\Models\Message;
 use App\Models\Ticket;
 use App\Models\TicketPriority;
 use App\Models\TicketType;
@@ -15,7 +16,6 @@ class TicketController extends Controller
     public static function routes()
     {
         Route::resource('ticket', __CLASS__);
-        Route::get('ticket/chat/view/{ticket}', [__CLASS__, 'showChatRoom'])->name('ticket.chat.view');
     }
 
     public function index()
@@ -41,10 +41,15 @@ class TicketController extends Controller
         $ticket->description = $request->description;
         $ticket->ticket_type_id = $request->ticket_type;
         $ticket->user_id = Auth::id();
-        if ($ticket->save()) {
-            return redirect()->back()->with('message', 'insert successfully.');
-        }
-        return redirect()->back()->with('message', 'insert not successfully.');
+        $ticket->save();
+
+        $message = new Message();
+        $message->message = $request->description;
+        $message->user_id = Auth::id();
+        $message->ticket_id = $ticket->id;
+        $message->save();
+        return redirect()->back()->with('message', 'insert successfully.');
+
     }
 
     public function show(Ticket $ticketGroup)
@@ -53,9 +58,10 @@ class TicketController extends Controller
 //        return view('ticket-groups.show')->with('ticketGroup', $ticketGroup);
     }
 
-    public function edit(Ticket $ticketGroup)
+    public function edit(Ticket $ticket)
     {
-//        return view('ticket-groups.create')->with('ticketGroup', $ticketGroup);
+        $ticket->update(['closed_at' => now()]);
+        return redirect()->back();
     }
 
     public function update(Ticket $ticketGroup, UpdateRequest $request)
@@ -72,8 +78,4 @@ class TicketController extends Controller
 //        return redirect()->back()->with('message', 'delete not successfully.');
     }
 
-    public function showChatRoom(Ticket $ticket)
-    {
-        return view('tickets.chat');
-    }
 }

@@ -15,6 +15,9 @@ class AnswerTicket extends Model
 
     public $timestamps = true;
 
-
+    public function answer()
+    {
+        return $this->belongsTo(Answer::class);
+    }
 
 }

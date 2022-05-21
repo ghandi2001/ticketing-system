@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['middleware'=>'auth'],function (){
+Route::middleware('auth')->group(function () {
     \App\Http\Controllers\UnitController::routes();
     \App\Http\Controllers\TicketPriorityController::routes();
     \App\Http\Controllers\TicketTypeController::routes();
@@ -20,6 +20,8 @@ Route::group(['middleware'=>'auth'],function (){
     \App\Http\Controllers\UserController::routes();
     \App\Http\Controllers\TicketController::routes();
     \App\Http\Controllers\RoleController::routes();
+    \App\Http\Controllers\ReportController::routes();
+    \App\Http\Controllers\MessageController::routes();
     Route::get('/', [\App\Http\Controllers\AuthController::class, 'dashboard'])->name('dashboard');
 });
 \App\Http\Controllers\AuthController::routes();

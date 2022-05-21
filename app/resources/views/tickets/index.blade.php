@@ -65,17 +65,19 @@
                                                        value="جزئیات">
                                             </form>
                                         @endif
-                                        @if(checkAnyAccessToTemplate('answer ticket'))
-                                            <form action="{{route('ticket.chat.view',$ticket)}}" method="GET">
-                                                <input type="submit" class="btn btn-success btn-sm ml-2 px-4"
-                                                       value="پاسخ دهی">
-                                            </form>
-                                        @endif
-                                        @if(checkAnyAccessToTemplate('close ticket'))
-                                            <form action="" method="GET">
-                                                <input type="submit" class="btn btn-warning btn-sm ml-2 px-4"
-                                                       value="بستن تیکت">
-                                            </form>
+                                        @if(!isset($ticket->closed_at))
+                                            @if(checkAnyAccessToTemplate('answer ticket'))
+                                                <form action="{{route('messages.show',$ticket->id)}}" method="GET">
+                                                    <input type="submit" class="btn btn-success btn-sm ml-2 px-4"
+                                                           value="پاسخ دهی">
+                                                </form>
+                                            @endif
+                                            @if(checkAnyAccessToTemplate('close ticket'))
+                                                <form action="" method="GET">
+                                                    <input type="submit" class="btn btn-danger btn-sm ml-2 px-4"
+                                                           value="بستن تیکت">
+                                                </form>
+                                            @endif
                                         @endif
                                     </div>
                                 </td>
