@@ -113,6 +113,7 @@
                             <th>ردیف</th>
                             <th>عنوان</th>
                             <th>توظیحات</th>
+                            <th>شماره اولویت</th>
                             <th>وظعیت</th>
                             <th>زمان ساخته شده</th>
                         </tr>
@@ -134,6 +135,7 @@
                                 <td>{{$row++}}</td>
                                 <td>{{$ticketPriority->title}}</td>
                                 <td>{{$ticketPriority->description}}</td>
+                                <td>{{$ticketPriority->number}}</td>
                                 <td>@if($ticketPriority->is_active)
                                         <span class="badge badge-rounded badge-success">فعال</span>
                                     @else

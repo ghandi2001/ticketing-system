@@ -9,6 +9,7 @@
                         <div class="product-detail-content">
                             <div class="new-arrival-content pr col-md-12">
                                 <h3>عنوان : {{$ticketPriority->title}}</h3>
+                                <p class="text-content">اولویت بر طبق شماره : {{$ticketPriority->number}}</p>
                                 <p class="text-content">توظیحات : {{$ticketPriority->description}}</p>
                             </div>
                         </div>

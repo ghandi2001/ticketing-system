@@ -21,6 +21,11 @@
                                        @if(isset($ticketPriority)) value="{{$ticketPriority->title}}" @endif>
                             </div>
                             <div class="form-group col-md-12">
+                                <label>اولویت بر طبق شماره</label>
+                                <input type="text" name="number" class="form-control" placeholder="اولویت بر طبق شماره"
+                                       @if(isset($ticketPriority)) value="{{$ticketPriority->number}}" @endif>
+                            </div>
+                            <div class="form-group col-md-12">
                                 <label>توظیحات</label>
                                 <input type="text" name="description" class="form-control"
                                        placeholder="توظیحات اولویت بندی"

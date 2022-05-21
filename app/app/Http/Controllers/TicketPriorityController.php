@@ -40,6 +40,7 @@ class TicketPriorityController extends Controller
         checkAccess('add ticketPriority');
         $ticketPriority = new TicketPriority();
         $ticketPriority->title = $request->title;
+        $ticketPriority->number = $request->number;
         $ticketPriority->description = $request->description;
         if ($ticketPriority->save()) {
             return redirect()->back()->with('message', 'insert successfully.');
@@ -76,6 +77,7 @@ class TicketPriorityController extends Controller
         if ($ticketPriority->updateOrFail([
             'title' => $request->title,
             'description' => $request->description,
+            'number'=>$request->number
         ])) return redirect()->route('ticket-priority.index')->with('message', 'update successfully.');
     }
 
