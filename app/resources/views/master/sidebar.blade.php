@@ -1,12 +1,14 @@
 <div class="deznav">
     <div class="deznav-scroll">
         <ul class="metismenu" id="menu">
+
             <li>
                 <a href="{{route('dashboard')}}" class="ai-icon" aria-expanded="false">
                     <i class="flaticon-381-home-2"></i>
                     <span class="nav-text">صفحه اصلی</span>
                 </a>
             </li>
+
             @if(checkAnyAccessToTemplate(['add ticket','see ticket','see tickets','close ticket']))
                 <li>
                     <a class="ai-icon" href="javascript:void()" aria-expanded="false">
@@ -21,6 +23,15 @@
                             <li><a href="{{route('ticket.index')}}">مشاهده تیکت ها</a></li>
                         @endif
                     </ul>
+                </li>
+            @endif
+
+            @if(checkAnyAccessToTemplate('make report'))
+                <li>
+                    <a href="{{route('report.wizard.show')}}" class="ai-icon" aria-expanded="false">
+                        <i class="flaticon-381-book"></i>
+                        <span class="nav-text">گزارش گیر</span>
+                    </a>
                 </li>
             @endif
 
@@ -46,6 +57,7 @@
                     </ul>
                 </li>
             @endif
+
             @if(checkAnyAccessToTemplate(['see users','import users']))
                 <li>
                     <a class="ai-icon" href="javascript:void()" aria-expanded="false">
@@ -66,9 +78,11 @@
                 </li>
             @endif
         </ul>
+
         <div class="copyright">
             <p>داشبورد مدیریت بلیط تیکسیا © 1399 کلیه حقوق محفوظ است</p>
             <p class="op5">ساخته شده با <i class="fa fa-heart"></i> توسط Amir</p>
         </div>
+
     </div>
 </div>

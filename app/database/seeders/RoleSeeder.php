@@ -70,5 +70,7 @@ class RoleSeeder extends Seeder
         $superAdmin->givePermissionTo('add ticket');
         $superAdmin->givePermissionTo('close ticket');
 
+        $superAdmin->givePermissionTo('make report');
+
     }
 }

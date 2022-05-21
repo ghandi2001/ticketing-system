@@ -68,5 +68,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name'=>'answer ticket']);
         Permission::create(['name'=>'add ticket']);
         Permission::create(['name'=>'close ticket']);
+
+        Permission::create(['name'=>'make report']);
     }
 }
