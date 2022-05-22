@@ -44,7 +44,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button class="btn btn-primary" type="submit">ارسال</button>
+                                        <button class="btn btn-primary m-3" type="submit">ارسال</button>
                                     </form>
                                 </div>
                             </div>
