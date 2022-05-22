@@ -3,7 +3,7 @@
         <ul class="metismenu" id="menu">
 
             <li>
-                <a href="{{route('dashboard')}}" class="ai-icon" aria-expanded="false">
+                <a href="{{route('home.index')}}" class="ai-icon" aria-expanded="false">
                     <i class="flaticon-381-home-2"></i>
                     <span class="nav-text">صفحه اصلی</span>
                 </a>

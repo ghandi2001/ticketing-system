@@ -43,14 +43,7 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
-    public function dashboard()
-    {
-        if (Auth::check()) {
-            return view('master.index');
-        }
 
-        return redirect()->route('login.show');
-    }
 
     public function signOut()
     {

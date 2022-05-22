@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
     \App\Http\Controllers\RoleController::routes();
     \App\Http\Controllers\ReportController::routes();
     \App\Http\Controllers\MessageController::routes();
-    Route::get('/', [\App\Http\Controllers\AuthController::class, 'dashboard'])->name('dashboard');
+    \App\Http\Controllers\HomeController::routes();
 });
 \App\Http\Controllers\AuthController::routes();
 

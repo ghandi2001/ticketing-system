@@ -54,8 +54,7 @@ class TicketController extends Controller
 
     public function show(Ticket $ticketGroup)
     {
-        checkAccess('see ticket');
-//        return view('ticket-groups.show')->with('ticketGroup', $ticketGroup);
+        return abort(404);
     }
 
     public function edit(Ticket $ticket)
@@ -66,16 +65,12 @@ class TicketController extends Controller
 
     public function update(Ticket $ticketGroup, UpdateRequest $request)
     {
-//        if($ticketGroup->update(['title'=>$request->title,'description'=>$request->description]))
-//            return redirect()->route('ticket-group.index')->with('message', 'delete successfully.');
-//        return redirect()->back()->with('message', 'delete not successfully.');
+        return abort(404);
     }
 
     public function destroy(Ticket $ticketGroup)
     {
-//        if ($ticketGroup->delete())
-//            redirect()->back()->with('message', 'delete successfully.');
-//        return redirect()->back()->with('message', 'delete not successfully.');
+        return abort(404);
     }
 
 }
