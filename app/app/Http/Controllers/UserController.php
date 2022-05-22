@@ -6,6 +6,7 @@ use App\Exports\UsersExport;
 use App\Exports\UsersSampleExport;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdateRequest;
+use App\Imports\UsersImport;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,8 @@ class UserController extends Controller
         Route::post('/user/update/profile/{user}', [__CLASS__, 'updateUserProfile'])->name('user.update.profile');
         Route::get('/user/collective/export/', [__CLASS__, 'export'])->name('user.collective.export');
         Route::get('/user/collective/import', [__CLASS__, 'importUsersForm'])->name('user.import.show');
-        Route::get('/user/collective/export/', [__CLASS__, 'sampleExport'])->name('user.sample.export');
+        Route::post('/user/collective/import', [__CLASS__, 'importUsers'])->name('user.import.work');
+        Route::get('/user/collective/sample/export/', [__CLASS__, 'sampleExport'])->name('user.sample.export');
         Route::resource('user', __CLASS__);
     }
 
@@ -40,9 +42,16 @@ class UserController extends Controller
         return view('users.import');
     }
 
-    public function importUsers()
+    public function importUsers(Request $request)
     {
         checkAccess('import users');
+        if ($request->file('uploaded_file')) {
+            $file = $request->file('uploaded_file');
+            $filename = date('YmdHi') . $file->getClientOriginalName();
+            $file->move(public_path('uploads/excels/'), $filename);
+            Excel::import(new UsersImport(), "uploads/excels/" . $filename);
+        }
+        return redirect()->back('message', 'mission success full');
     }
 
     public function create()

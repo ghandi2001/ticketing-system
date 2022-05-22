@@ -116,7 +116,7 @@
                                            class="btn btn-outline-primary rounded btn-sm px-4">فعال / غیر فعال </a>
                                     @endif
                                     @if(checkAnyAccessToTemplate('export users'))
-                                        <a href="{{route('user.collective.export')}}"
+                                        <a href="{{url('/user/collective/export/')}}"
                                            class="btn btn-warning rounded ml-2 btn-sm px-4">خروجی گرفتن از کاربران</a>
                                     @endif
                                     @if(checkAnyAccessToTemplate('delete user'))

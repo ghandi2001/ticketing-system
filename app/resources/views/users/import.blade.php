@@ -29,16 +29,22 @@
                             </div>
                             <div class="card-body">
                                 <div class="basic-form custom_file_input">
-                                    <form action="#">
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">بارگذاری</span>
-                                            </div>
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input">
-                                                <label class="custom-file-label">انتخاب فایل</label>
+                                    <form class="custom_file_input basic-form" action="{{route('user.import.work')}}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="form-group col-md-12">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">بارگذاری</span>
+                                                </div>
+                                                <div class="custom-file">
+                                                    <input type="file" id="file-input"
+                                                           class="custom-file-input"
+                                                           name="uploaded_file">
+                                                    <label class="custom-file-label">عکس پروفایل</label>
+                                                </div>
                                             </div>
                                         </div>
+                                        <button class="btn btn-primary" type="submit">ارسال</button>
                                     </form>
                                 </div>
                             </div>
@@ -52,7 +58,7 @@
 
 @section('attempt-scripts')
     <script type="text/javascript">
-        $(".custom-file-input").on("change", function () {
+        $("#file-input").on("change", function () {
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
