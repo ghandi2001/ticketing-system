@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ReportExport;
 use App\Http\Requests\Report\StoreRequest;
 use App\Models\Ticket;
 use App\Models\TicketPriority;
 use App\Models\TicketType;
 use App\Models\Unit;
 use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
@@ -127,7 +129,7 @@ class ReportController extends Controller
                 return redirect()->back()->with('message', 'selected table doesnt exists');
             }
         }
-        return dd($report);
+        return Excel::download(new ReportExport($report),  $request->input('report_name') . ' - ' . $request->input('report_description') . ' - report.xlsx');
     }
 
 }
